@@ -10,3 +10,8 @@ See all chat messages and click one to feature it on the stream
 * Click: Toggle a message from screen
 * Ctrl + Click: Send / remove a message from queue
 * Alt + Click: Toggle bookmark
+
+---
+Follow me on [Twitter](https://twitter.gonzalopozzo.com)
+Follow me on [Twitch](https://twitch.gonzalopozzo.com)
+Doname un [Cafecito](https://cafecito.gonzalopozzo.com)
