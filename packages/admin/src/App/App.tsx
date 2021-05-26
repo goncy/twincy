@@ -10,31 +10,29 @@ const socket = SocketIO("http://localhost:8002");
 
 const App: React.FC = () => {
   const [messages, setMessages] = React.useState<IMessage[]>([]);
-  const [selected, setSelected] = React.useState<null | IMessage>(null);
-  const [bookmark, setBookmark] = React.useState<null | IMessage>(null);
-  const [queue, setQueue] = React.useState<IMessage[]>([]);
+  const [selected, setSelected] = React.useState<null | IMessage["id"]>(null);
+  const [bookmark, setBookmark] = React.useState<null | IMessage["id"]>(null);
+  const [queue, setQueue] = React.useState<IMessage["id"][]>([]);
 
   function handleToggleSelected(message: IMessage) {
-    socket.emit("select", selected?.id === message.id ? null : message);
+    socket.emit("select", selected === message.id ? null : message);
   }
 
-  function handleToggleQueue(message: IMessage) {
+  function handleToggleQueue(id: IMessage["id"]) {
     setQueue((queue) =>
-      queue.find((_message) => _message.id === message.id)
-        ? queue.filter((_message) => _message.id !== message.id)
-        : queue.concat(message),
+      queue.includes(id) ? queue.filter((_id) => _id !== id) : queue.concat(id),
     );
   }
 
-  function handleToggleBookmark(message: IMessage) {
-    setBookmark((bookmark) => (bookmark?.id === message.id ? null : message));
+  function handleToggleBookmark(id: IMessage["id"]) {
+    setBookmark((_id) => (_id === id ? null : id));
   }
 
   React.useEffect(() => {
     socket.on("message", (message: IMessage) =>
       setMessages((messages) => messages.concat(message)),
     );
-    socket.on("select", (message: IMessage) => setSelected(message));
+    socket.on("select", (message: IMessage) => setSelected(message?.id));
 
     return () => {
       socket.disconnect();
@@ -45,7 +43,7 @@ const App: React.FC = () => {
     <main className={styles.container}>
       <section className={styles.messages}>
         {messages.map((message) => {
-          const isSelected = selected?.id === message.id;
+          const isSelected = selected === message.id;
 
           return (
             <>
@@ -57,7 +55,7 @@ const App: React.FC = () => {
                 variant={
                   isSelected
                     ? "blue"
-                    : queue.find((_message) => _message.id === message.id)
+                    : queue.includes(message.id)
                     ? "yellow"
                     : message.isHighlighted
                     ? "green"
@@ -65,35 +63,39 @@ const App: React.FC = () => {
                 }
                 onClick={({ctrlKey, altKey}) =>
                   ctrlKey
-                    ? handleToggleQueue(message)
+                    ? handleToggleQueue(message.id)
                     : altKey
-                    ? handleToggleBookmark(message)
+                    ? handleToggleBookmark(message.id)
                     : handleToggleSelected(message)
                 }
               />
-              {bookmark?.id === message.id && <hr className={styles.bookmark} />}
+              {bookmark === message.id && (
+                <hr className={styles.bookmark} onClick={() => setBookmark(null)} />
+              )}
             </>
           );
         })}
       </section>
       {Boolean(queue.length) && (
         <section className={styles.queue}>
-          {queue.map((message) => {
-            const isSelected = selected?.id === message.id;
+          {messages
+            .filter((message) => queue.includes(message.id))
+            .map((message) => {
+              const isSelected = selected === message.id;
 
-            return (
-              <Message
-                key={message.id}
-                color={message.color}
-                message={message.message}
-                sender={message.sender}
-                variant={isSelected ? "blue" : "normal"}
-                onClick={(event) =>
-                  event.ctrlKey ? handleToggleQueue(message) : handleToggleSelected(message)
-                }
-              />
-            );
-          })}
+              return (
+                <Message
+                  key={message.id}
+                  color={message.color}
+                  message={message.message}
+                  sender={message.sender}
+                  variant={isSelected ? "blue" : "normal"}
+                  onClick={(event) =>
+                    event.ctrlKey ? handleToggleQueue(message.id) : handleToggleSelected(message)
+                  }
+                />
+              );
+            })}
         </section>
       )}
     </main>
