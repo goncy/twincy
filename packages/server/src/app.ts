@@ -1,6 +1,7 @@
 import * as io from "socket.io";
 import * as tmi from "tmi.js";
 
+import {CHANNEL} from "./constants";
 import {Message} from "./types";
 import {parseMessage} from "./utils/message";
 
@@ -11,7 +12,7 @@ const server = new io.Server(8002, {
 });
 
 const client = new tmi.Client({
-  channels: ["goncypozzo"],
+  channels: [CHANNEL],
 });
 
 server.on("connection", (socket) => {
