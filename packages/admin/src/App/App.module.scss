@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  height: 100%;
+  flex: 1;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.queue {
+  margin-left: 12px;
+  border-left: 1px solid gainsboro;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bookmark {
+  margin: 36px 0;
+  border-width: 12px;
+  border-color: gold;
+  border-style: dashed;
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@goncy/twitch-chat-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./src/app.ts"
+  },
+  "dependencies": {
+    "@types/node": "^14.11.2",
+    "@types/tmi.js": "^1.4.2",
+    "@types/typescript": "^2.0.0",
+    "nodemon": "^2.0.4",
+    "socket.io": "^4.1.2",
+    "tmi.js": "^1.8.3",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "prettier": "^2.1.2"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.3",
+    "utf-8-validate": "^5.0.5"
+  }
+}

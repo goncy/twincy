@@ -1,0 +1,48 @@
+.container {
+  padding: 12px;
+  display: inline-flex;
+  align-items: flex-start;
+
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  &.blue {
+    background-color: lightskyblue;
+    color: white;
+  }
+
+  &.yellow {
+    background-color: lightpink;
+    color: white;
+  }
+
+  &.green {
+    background-color: lightgreen;
+    color: white;
+  }
+}
+
+.sender {
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 6px;
+  width: 140px;
+  min-width: 140px;
+
+  &::after {
+    content: ': '
+  }
+}
+
+.message {
+  font-weight: normal;
+  font-size: 20px;
+  display: inline-flex;
+
+  img {
+    width: 27px;
+    height: 27px;
+    margin: auto 4px;
+  }
+}
