@@ -5,7 +5,7 @@ export default extendTheme({
     global: {
       "html, body, #root": {
         height: "100%",
-        overflow: "hidden",
+        maxHeight: "100vh",
       },
     },
   },

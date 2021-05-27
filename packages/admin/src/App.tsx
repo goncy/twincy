@@ -77,11 +77,12 @@ const App: React.FC = () => {
         divider={<StackDivider />}
         flex={1}
         height="100%"
+        overflow="hidden"
         paddingBottom={3}
         spacing={3}
       >
         {messages.length ? (
-          <Stack flex={1} overflowY="auto" spacing={3}>
+          <Stack flex={1} overflowY="auto" spacing={0}>
             {messages.map((message) => {
               const isSelected = selected === message.id;
 
