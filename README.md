@@ -1,5 +1,5 @@
-# Twitch chat
-See all chat messages and click one to feature it on the stream
+# Twincy
+See all chat messages and click one to feature it on the stream.
 
 ## Instructions
 * Update your channel name on `./packages/server/src/constants.ts`

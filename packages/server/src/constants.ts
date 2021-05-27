@@ -1,1 +1,1 @@
-export const CHANNEL = "goncypozzo";
+export const CHANNEL = "goncy";
