@@ -1,5 +1,9 @@
 import * as tmi from "tmi.js";
 
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 export function parseMessage(message: string, emotes: tmi.ChatUserstate["emotes"]) {
   if (!emotes) return message;
 
@@ -16,7 +20,7 @@ export function parseMessage(message: string, emotes: tmi.ChatUserstate["emotes"
   text = text.replace(/(<)/gi, "$1 ");
 
   Object.entries(map).forEach(([id, emote]) => {
-    const regexp = new RegExp(emote, "ig");
+    const regexp = new RegExp(escapeRegExp(emote), "ig");
 
     text = text.replace(regexp, `<img src="https://static-cdn.jtvnw.net/emoticons/v1/${id}/3.0">`);
   });

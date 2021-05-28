@@ -100,6 +100,7 @@ const Message: React.FC<Props> = ({
             width: 6,
             height: 6,
             marginX: 1,
+            objectFit: "contain",
           },
         }}
       />
