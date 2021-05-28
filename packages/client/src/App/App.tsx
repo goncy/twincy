@@ -7,9 +7,15 @@ import styles from "./App.module.scss";
 const socket = SocketIO("http://localhost:8002");
 
 interface Message {
-  message: string;
-  sender: string;
   id: string;
+  sender: {
+    badges: string[];
+    name: string;
+  };
+  timestamp: number;
+  message: string;
+  color: string;
+  isHighlighted: boolean;
 }
 
 const App: React.FC = () => {
@@ -28,7 +34,10 @@ const App: React.FC = () => {
           exit={{scale: 0}}
           initial={{scale: 0}}
         >
-          <span className={styles.sender} dangerouslySetInnerHTML={{__html: selected.sender}} />
+          <span
+            className={styles.sender}
+            dangerouslySetInnerHTML={{__html: selected.sender.name}}
+          />
           <span className={styles.message} dangerouslySetInnerHTML={{__html: selected.message}} />
         </motion.main>
       )}
