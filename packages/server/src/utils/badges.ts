@@ -2,7 +2,9 @@ import * as tmi from "tmi.js";
 
 import {BADGES} from "../catalogs/badges";
 
-export function parseBadges(badges: tmi.ChatUserstate["badges"] = {}) {
+export function parseBadges(badges: tmi.ChatUserstate["badges"]) {
+  if (!badges) return [];
+
   return Object.entries(badges)
     .map(
       ([set, version = "0"]) =>

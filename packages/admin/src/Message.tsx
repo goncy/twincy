@@ -90,11 +90,13 @@ const Message: React.FC<Props> = ({
       {...props}
     >
       <Stack alignItems="center" direction="row">
-        <Stack direction="row" spacing={1}>
-          {badges?.map((badge) => (
-            <Image key={badge} height={5} objectFit="contain" src={badge} width={5} />
-          ))}
-        </Stack>
+        {Boolean(badges?.length) && (
+          <Stack direction="row" spacing={1}>
+            {badges?.map((badge) => (
+              <Image key={badge} height={5} objectFit="contain" src={badge} width={5} />
+            ))}
+          </Stack>
+        )}
         <Stack alignItems="center" direction="row">
           <Box
             alignItems="center"
