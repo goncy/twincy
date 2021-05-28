@@ -89,9 +89,11 @@ const App: React.FC = () => {
               return (
                 <Box key={message.id}>
                   <Message
+                    badges={message.sender.badges}
                     color={message.color}
                     message={message.message}
-                    sender={message.sender}
+                    sender={message.sender.name}
+                    timestamp={message.timestamp}
                     variant={
                       isSelected
                         ? "featured"
@@ -125,9 +127,9 @@ const App: React.FC = () => {
             No messages found yet on the channel
           </Text>
         )}
-        {Boolean(queue.length) && (
-          <Stack flex={1} overflowY="auto">
-            {messages
+        <Stack flex={1} overflowY="auto">
+          {Boolean(queue.length) ? (
+            messages
               .filter((message) => queue.includes(message.id))
               .map((message) => {
                 const isSelected = selected === message.id;
@@ -135,18 +137,24 @@ const App: React.FC = () => {
                 return (
                   <Message
                     key={message.id}
+                    badges={message.sender.badges}
                     color={message.color}
                     message={message.message}
-                    sender={message.sender}
+                    sender={message.sender.name}
+                    timestamp={message.timestamp}
                     variant={isSelected ? "featured" : "normal"}
                     onClick={(event) =>
                       event.ctrlKey ? handleToggleQueue(message.id) : handleToggleSelected(message)
                     }
                   />
                 );
-              })}
-          </Stack>
-        )}
+              })
+          ) : (
+            <Text fontSize="xl" margin="auto" opacity={0.5}>
+              No messages in queue
+            </Text>
+          )}
+        </Stack>
       </Stack>
     </Stack>
   );

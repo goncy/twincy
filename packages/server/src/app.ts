@@ -4,6 +4,7 @@ import * as tmi from "tmi.js";
 import {CHANNEL} from "./constants";
 import {Message} from "./types";
 import {parseMessage} from "./utils/message";
+import {parseBadges} from "./utils/badges";
 
 const server = new io.Server(8002, {
   cors: {
@@ -23,7 +24,11 @@ client.on("message", (_channel, tags, message) => {
   server.emit("message", {
     id: tags["id"],
     color: tags.color,
-    sender: tags.username,
+    sender: {
+      badges: parseBadges(tags["badges"]),
+      name: tags.username,
+    },
+    timestamp: tags["tmi-sent-ts"],
     message: parseMessage(message, tags["emotes"]),
     isHighlighted: tags["msg-id"] === "highlighted-message",
   });
