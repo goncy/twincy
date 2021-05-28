@@ -81,9 +81,9 @@ const App: React.FC = () => {
         paddingBottom={3}
         spacing={3}
       >
-        {messages.length ? (
-          <Stack flex={1} overflowY="auto" spacing={0}>
-            {messages.map((message) => {
+        <Stack flex={1} overflowY="auto" spacing={0}>
+          {messages.length ? (
+            messages.map((message) => {
               const isSelected = selected === message.id;
 
               return (
@@ -120,13 +120,13 @@ const App: React.FC = () => {
                   )}
                 </Box>
               );
-            })}
-          </Stack>
-        ) : (
-          <Text fontSize="xl" margin="auto" opacity={0.5}>
-            No messages found yet on the channel
-          </Text>
-        )}
+            })
+          ) : (
+            <Text fontSize="xl" margin="auto" opacity={0.5}>
+              No messages found yet on the channel
+            </Text>
+          )}
+        </Stack>
         <Stack flex={1} overflowY="auto">
           {Boolean(queue.length) ? (
             messages
