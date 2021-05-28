@@ -34,10 +34,16 @@ const App: React.FC = () => {
           exit={{scale: 0}}
           initial={{scale: 0}}
         >
-          <span
-            className={styles.sender}
-            dangerouslySetInnerHTML={{__html: selected.sender.name}}
-          />
+          <div className={styles.sender}>
+            {Boolean(selected.sender.badges?.length) && (
+              <span>
+                {selected.sender.badges?.map((badge) => (
+                  <img key={badge} src={badge} />
+                ))}
+              </span>
+            )}
+            <span dangerouslySetInnerHTML={{__html: selected.sender.name}} />
+          </div>
           <span className={styles.message} dangerouslySetInnerHTML={{__html: selected.message}} />
         </motion.main>
       )}
