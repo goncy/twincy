@@ -4,6 +4,7 @@
 
 html, body {
   margin: 0;
+  overflow: hidden;
   padding: 2rem;
   height: 100%;
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

@@ -11,86 +11,10 @@ import Navbar from "./components/Navbar";
 const socket = SocketIO("http://localhost:8002");
 
 const App: React.FC = () => {
-  const [messages, setMessages] = React.useState<IMessage[]>([
-    {
-      id: "c35a7972-de4c-4c43-8736-813e29ad0809",
-      sender: {
-        badges: [
-          "https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/1",
-          "https://static-cdn.jtvnw.net/badges/v1/5d9f2208-5dd8-11e7-8513-2ff4adfae661/1",
-          "https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/1",
-        ],
-        name: "goncypozzo",
-      },
-      timestamp: 1622322887149,
-      message: "Lorem ipsum",
-      isHighlighted: false,
-    },
-    {
-      id: "4c9a0ed0-4728-4c6c-ad89-7e32b3817a0c",
-      sender: {
-        badges: [
-          "https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/1",
-          "https://static-cdn.jtvnw.net/badges/v1/5d9f2208-5dd8-11e7-8513-2ff4adfae661/1",
-          "https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/1",
-        ],
-        name: "goncypozzo",
-      },
-      timestamp: 1622322890018,
-      message: "dolor sit amet",
-      isHighlighted: false,
-    },
-    {
-      id: "511f1fdf-5eb2-4432-9551-0288d017442b",
-      sender: {
-        badges: [
-          "https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/1",
-          "https://static-cdn.jtvnw.net/badges/v1/5d9f2208-5dd8-11e7-8513-2ff4adfae661/1",
-          "https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/1",
-        ],
-        name: "goncypozzo",
-      },
-      timestamp: 1622322894165,
-      message: "constectuer adipscing elit",
-      isHighlighted: false,
-    },
-    {
-      id: "2c9464d8-cb70-447f-88b4-119385aff1cd",
-      sender: {
-        badges: [
-          "https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/1",
-          "https://static-cdn.jtvnw.net/badges/v1/5d9f2208-5dd8-11e7-8513-2ff4adfae661/1",
-          "https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/1",
-        ],
-        name: "goncypozzo",
-      },
-      timestamp: 1622322922539,
-      message: "sarasa la fasa",
-      isHighlighted: true,
-    },
-    {
-      id: "9818c4ae-21ec-4ba4-a0c3-963068b26e24",
-      sender: {
-        badges: [
-          "https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/1",
-          "https://static-cdn.jtvnw.net/badges/v1/5d9f2208-5dd8-11e7-8513-2ff4adfae661/1",
-          "https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/1",
-        ],
-        name: "goncypozzo",
-      },
-      timestamp: 1622322953506,
-      message: "Otra",
-      isHighlighted: false,
-    },
-  ]);
-  const [selected, setSelected] = React.useState<null | IMessage["id"]>(
-    "9818c4ae-21ec-4ba4-a0c3-963068b26e24",
-  );
+  const [messages, setMessages] = React.useState<IMessage[]>([]);
+  const [selected, setSelected] = React.useState<null | IMessage["id"]>();
   const [bookmark, setBookmark] = React.useState<null | IMessage["id"]>(null);
-  const [favorites, setFavorites] = React.useState<IMessage["id"][]>([
-    "9818c4ae-21ec-4ba4-a0c3-963068b26e24",
-    "2c9464d8-cb70-447f-88b4-119385aff1cd",
-  ]);
+  const [favorites, setFavorites] = React.useState<IMessage["id"][]>([]);
 
   function handleToggleSelected(message: IMessage) {
     socket.emit("select", selected === message.id ? null : message);

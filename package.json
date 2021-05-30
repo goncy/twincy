@@ -4,12 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "kill-ports": "kill-port --port 8000,8001,8002",
     "prebootstrap": "npm install",
     "bootstrap": "lerna bootstrap",
-    "prestart": "npm run bootstrap",
-    "start": "lerna run dev --parallel --stream"
+    "prestart": "npm run kill-ports && npm run bootstrap",
+    "start": "electron ./electron/main.js",
+    "predev": "npm run kill-ports",
+    "dev": "lerna run dev --parallel --stream"
   },
   "devDependencies": {
+    "electron": "^13.0.1",
+    "kill-port": "^1.6.1",
     "lerna": "^4.0.0"
   }
 }
