@@ -6,6 +6,5 @@ export interface Message {
   };
   timestamp: number;
   message: string;
-  color: string;
   isHighlighted: boolean;
 }

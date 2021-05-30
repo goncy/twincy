@@ -28,7 +28,7 @@ client.on("message", (_channel, tags, message) => {
       badges: parseBadges(tags["badges"]),
       name: tags.username,
     },
-    timestamp: tags["tmi-sent-ts"],
+    timestamp: Number(tags["tmi-sent-ts"]),
     message: parseMessage(message, tags["emotes"]),
     isHighlighted: tags["msg-id"] === "highlighted-message",
   });
