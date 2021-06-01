@@ -13,5 +13,8 @@ See all chat messages and click one to feature it on the stream.
 * Ctrl + Click: Send / remove a message from queue
 * Alt + Click: Toggle bookmark
 
+## Standalone app
+The standalone app is not yet distributed, but if you want to build it, go inside the `electron` folder and run `npm run package`, it will generate an `out` directory with the `.exe` inside.
+
 ---
 Follow me on [Twitter](https://twitter.gonzalopozzo.com), on [Twitch](https://twitch.gonzalopozzo.com) and doname un [Cafecito](https://cafecito.gonzalopozzo.com) ✨
