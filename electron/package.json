@@ -1,0 +1,69 @@
+{
+  "name": "@goncy/twincy-electron",
+  "version": "1.0.0",
+  "license": "MIT",
+  "productName": "twincy",
+  "description": "Show featured messages on your screen",
+  "main": "src/main.js",
+  "author": "Goncy",
+  "scripts": {
+    "kill": "kill-port --port 8000,8001,8002",
+    "build": "cd ../ && npm run build",
+    "postbuild": "node ./copy.js",
+    "predev": "npm run kill",
+    "dev": "electron-forge start",
+    "prepackage": "npm run build",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "yarn",
+        "icon": "src/assets/icon.ico"
+      },
+      "electronWinstallerConfig": {
+        "name": "twincy"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "",
+        "name": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "twincy"
+      }
+    }
+  },
+  "dependencies": {
+    "electron-compile": "^6.4.4",
+    "electron-squirrel-startup": "^1.0.0",
+    "finalhandler": "^1.1.2",
+    "serve-static": "^1.14.1"
+  },
+  "devDependencies": {
+    "electron-forge": "^5.2.4",
+    "electron-prebuilt-compile": "8.2.0",
+    "eslint": "^7.27.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "fs-extra": "^10.0.0",
+    "kill-port": "^1.6.1"
+  }
+}

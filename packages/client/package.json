@@ -1,10 +1,11 @@
 {
-  "name": "@goncy/twitch-chat-client",
+  "name": "@goncy/twincy-client",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "prestart": "npm run build",
+    "start": "vite preview --port=8001"
   },
   "dependencies": {
     "framer-motion": "^4.1.17",

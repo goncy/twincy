@@ -9,11 +9,12 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false,
     "baseUrl": "./src",
     "paths": {
       "~/*": ["./*"]
     }
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "exclude": ["**/*.js"]
 }

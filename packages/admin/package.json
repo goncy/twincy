@@ -1,10 +1,11 @@
 {
-  "name": "@goncy/twitch-chat-admin",
+  "name": "@goncy/twincy-admin",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "prestart": "npm run build",
+    "start": "vite preview --port=8000"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.13",

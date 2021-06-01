@@ -50,9 +50,9 @@ const App: React.FC = () => {
         flex={1}
         height="100%"
         overflow="hidden"
-        paddingBottom={3}
+        paddingBottom={4}
         paddingX={4}
-        spacing={3}
+        spacing={4}
       >
         <Stack flex={1}>
           <Text fontWeight="500" textStyle="title" textTransform="uppercase">
