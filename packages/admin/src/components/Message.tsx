@@ -77,14 +77,17 @@ const Message: React.FC<Props> = ({
           <Box
             as="span"
             dangerouslySetInnerHTML={{__html: message}}
-            display="inline-flex"
+            display="inline-block"
             fontSize="xl"
             sx={{
-              "& img": {
-                width: 8,
-                height: 8,
+              "& i": {
+                width: 6,
+                height: 6,
                 marginX: 1,
-                objectFit: "contain",
+                backgroundSize: "contain",
+                backgroundPosition: "center",
+                display: "inline-block",
+                verticalAlign: "sub",
               },
             }}
             textStyle={isSelected ? "white" : "soft"}

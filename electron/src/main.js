@@ -4,7 +4,12 @@ const path = require('path');
 const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 
-// Window
+// If installing, quit
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
+
+// Create windiws
 function createWindow () {
   const main = new BrowserWindow({
     width: 1024,
@@ -24,13 +29,16 @@ function createWindow () {
     icon: path.join(__dirname, '/assets/icon.png')
   });
 
+  // Load the splash
   splash.loadFile(path.join(__dirname, '/splash.html'));
   main.loadURL('http://localhost:8000/admin');
 
+  // If server is not ready, try again
   main.webContents.on('did-fail-load', () => {
     main.loadURL('http://localhost:8000/admin');
   });
 
+  // Remove splash when app is ready
   main.webContents.on('did-stop-loading', () => {
     splash.destroy();
     main.show();
@@ -38,12 +46,10 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  console.log({ isDev });
-
   if (isDev) {
     exec('cd .. && npm run dev');
   } else {
-    require('../../packages/server/dist/app');
+    require('../packages/server/dist/app');
   }
 
   createWindow();

@@ -22,7 +22,10 @@ export function parseMessage(message: string, emotes: tmi.ChatUserstate["emotes"
   Object.entries(map).forEach(([id, emote]) => {
     const regexp = new RegExp(escapeRegExp(emote), "ig");
 
-    text = text.replace(regexp, `<img src="https://static-cdn.jtvnw.net/emoticons/v1/${id}/3.0">`);
+    text = text.replace(
+      regexp,
+      `<i style="background-image: url('https://static-cdn.jtvnw.net/emoticons/v1/${id}/3.0')"></i>`,
+    );
   });
 
   return text;

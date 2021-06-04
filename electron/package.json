@@ -9,10 +9,12 @@
   "scripts": {
     "kill": "kill-port --port 8000,8001,8002",
     "build": "cd ../ && npm run build",
+    "postbuild": "node ./scripts/packages.js",
     "predev": "npm run kill",
     "dev": "electron-forge start",
     "prepackage": "npm run build",
     "package": "electron-forge package",
+    "premake": "npm run build",
     "make": "electron-forge make"
   },
   "config": {
@@ -31,7 +33,11 @@
       },
       "electronPackagerConfig": {
         "packageManager": "yarn",
-        "icon": "src/assets/icon.ico"
+        "icon": "src/assets/icon.ico",
+        "win32metadata":{
+          "ProductName": "Twincy",
+          "CompanyName": "goncy"
+        }
       },
       "electronWinstallerConfig": {
         "name": "twincy"
@@ -39,11 +45,11 @@
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
-        "owner": "",
-        "name": ""
+        "owner": "goncy",
+        "name": "twincy"
       },
       "windowsStoreConfig": {
-        "packageName": "",
+        "packageName": "twincy",
         "name": "twincy"
       }
     }

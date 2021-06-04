@@ -28,11 +28,15 @@
 .message {
   font-weight: 400;
   font-size: 2rem;
-  display: inline-flex;
+  display: inline-block;
 
-  img {
-    width: 1.5rem;
-    height: 1.5rem;
+  i {
+    width: 2rem;
+    height: 2rem;
     margin: auto 4px;
+    display: inline-block;
+    vertical-align: sub;
+    background-size: contain;
+    background-position: center;
   }
 }
