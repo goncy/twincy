@@ -1,19 +1,13 @@
-const path = require('path');
-const finalhandler = require('finalhandler');
-const serveStatic = require('serve-static');
-const http = require('http');
-
-// Serve up public/ftp folder
-const clientServe = serveStatic(path.join(__dirname, '/../packages/client'), { index: ['index.html', 'index.htm'] });
-const adminServe = serveStatic(path.join(__dirname, '/../packages/admin'), { index: ['index.html', 'index.htm'] });
+const { exec } = require('child_process');
 
 function start () {
-  // Start server
-  require('../packages/server/app');
+  console.log('env', process.env.NODE_ENV);
 
-  // Create client and admin
-  http.createServer((req, res) => clientServe(req, res, finalhandler(req, res))).listen(8001);
-  http.createServer((req, res) => adminServe(req, res, finalhandler(req, res))).listen(8000);
+  if (process.env.NODE_ENV === 'production') {
+    require('../../packages/server/dist/app');
+  } else {
+    exec('cd .. && npm run dev');
+  }
 }
 
 module.exports = start;

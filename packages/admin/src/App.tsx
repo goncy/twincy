@@ -8,7 +8,7 @@ import {Message as IMessage} from "~/types";
 import Bookmark from "./components/Bookmark";
 import Navbar from "./components/Navbar";
 
-const socket = SocketIO("http://localhost:8002");
+const socket = SocketIO(process.env.NODE_ENV === "production" ? "/" : "http://localhost:8000");
 
 const App: React.FC = () => {
   const [messages, setMessages] = React.useState<IMessage[]>([]);
@@ -42,7 +42,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <Stack height="100%" spacing={12}>
+    <Stack height="100%" spacing={4}>
       <Navbar />
       <Stack
         direction="row"

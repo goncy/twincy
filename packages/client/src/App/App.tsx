@@ -4,7 +4,7 @@ import {AnimatePresence, motion} from "framer-motion";
 
 import styles from "./App.module.scss";
 
-const socket = SocketIO("http://localhost:8002");
+const socket = SocketIO(process.env.NODE_ENV === "production" ? "/" : "http://localhost:8000");
 
 interface Message {
   id: string;

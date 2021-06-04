@@ -1,7 +1,8 @@
+
+const { exec } = require('child_process');
 const path = require('path');
 const { app, BrowserWindow } = require('electron');
-
-const startPackages = require('./packages');
+const isDev = require('electron-is-dev');
 
 // Window
 function createWindow () {
@@ -24,10 +25,10 @@ function createWindow () {
   });
 
   splash.loadFile(path.join(__dirname, '/splash.html'));
-  main.loadURL('http://localhost:8000');
+  main.loadURL('http://localhost:8000/admin');
 
   main.webContents.on('did-fail-load', () => {
-    main.loadURL('http://localhost:8000');
+    main.loadURL('http://localhost:8000/admin');
   });
 
   main.webContents.on('did-stop-loading', () => {
@@ -37,7 +38,14 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  startPackages();
+  console.log({ isDev });
+
+  if (isDev) {
+    exec('cd .. && npm run dev');
+  } else {
+    require('../../packages/server/dist/app');
+  }
+
   createWindow();
 
   app.on('activate', () => {

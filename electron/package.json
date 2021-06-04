@@ -9,7 +9,6 @@
   "scripts": {
     "kill": "kill-port --port 8000,8001,8002",
     "build": "cd ../ && npm run build",
-    "postbuild": "node ./copy.js",
     "predev": "npm run kill",
     "dev": "electron-forge start",
     "prepackage": "npm run build",
@@ -51,6 +50,7 @@
   },
   "dependencies": {
     "electron-compile": "^6.4.4",
+    "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "finalhandler": "^1.1.2",
     "serve-static": "^1.14.1"

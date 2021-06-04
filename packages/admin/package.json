@@ -2,10 +2,10 @@
   "name": "@goncy/twincy-admin",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port=8002",
     "build": "tsc && vite build",
     "prestart": "npm run build",
-    "start": "vite preview --port=8000"
+    "start": "vite preview --port=8002"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.13",
@@ -18,7 +18,7 @@
     "socket.io-client": "^4.1.2"
   },
   "devDependencies": {
-    "@types/node": "^14.14.31",
+    "@types/node": "^14.17.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
