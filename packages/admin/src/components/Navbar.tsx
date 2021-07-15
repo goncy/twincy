@@ -10,7 +10,11 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import {ChatIcon, SunIcon, MoonIcon, CopyIcon} from "@chakra-ui/icons";
+import {ChatIcon, SunIcon, MoonIcon, CopyIcon, DeleteIcon} from "@chakra-ui/icons";
+
+interface Props {
+  onClear: VoidFunction;
+}
 
 const CopiedToast = () => (
   <Alert backgroundColor="primary.500" color="white" status="success" variant="solid">
@@ -19,7 +23,7 @@ const CopiedToast = () => (
   </Alert>
 );
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<Props> = ({onClear}) => {
   const {onCopy} = useClipboard(`http://localhost:8001`);
   const toast = useToast();
   const backgroundColor = useColorModeValue("primary.500", "dark.900");
@@ -57,6 +61,7 @@ const Navbar: React.FC = () => {
             <MoonIcon height={5} width={5} />
           )}
         </Box>
+        <DeleteIcon color="white" cursor="pointer" height={5} width={5} onClick={onClear} />
       </Stack>
     </Stack>
   );

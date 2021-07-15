@@ -12,7 +12,7 @@ const socket = SocketIO(process.env.NODE_ENV === "production" ? "/" : "http://lo
 
 const App: React.FC = () => {
   const [messages, setMessages] = React.useState<IMessage[]>([]);
-  const [selected, setSelected] = React.useState<null | IMessage["id"]>();
+  const [selected, setSelected] = React.useState<null | IMessage["id"]>(null);
   const [bookmark, setBookmark] = React.useState<null | IMessage["id"]>(null);
   const [favorites, setFavorites] = React.useState<IMessage["id"][]>([]);
 
@@ -30,6 +30,13 @@ const App: React.FC = () => {
     setBookmark((_id) => (_id === id ? null : id));
   }
 
+  function handleClear() {
+    setMessages([]);
+    setSelected(null);
+    setBookmark(null);
+    setFavorites([]);
+  }
+
   React.useEffect(() => {
     socket.on("message", (message: IMessage) =>
       setMessages((messages) => messages.concat(message)),
@@ -43,7 +50,7 @@ const App: React.FC = () => {
 
   return (
     <Stack height="100%" spacing={4}>
-      <Navbar />
+      <Navbar onClear={handleClear} />
       <Stack
         direction="row"
         divider={<StackDivider />}
