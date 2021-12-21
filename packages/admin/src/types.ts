@@ -7,4 +7,5 @@ export interface Message {
   timestamp: number;
   message: string;
   isHighlighted: boolean;
+  isPinned: boolean;
 }

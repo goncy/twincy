@@ -2,8 +2,8 @@ import * as React from "react";
 import SocketIO from "socket.io-client";
 import {Stack, StackDivider, Text} from "@chakra-ui/react";
 
+import type {Message as IMessage} from "~/types";
 import Message from "~/components/Message";
-import {Message as IMessage} from "~/types";
 
 import Bookmark from "./components/Bookmark";
 import Navbar from "./components/Navbar";
@@ -38,9 +38,14 @@ const App: React.FC = () => {
   }
 
   React.useEffect(() => {
-    socket.on("message", (message: IMessage) =>
-      setMessages((messages) => messages.concat(message)),
-    );
+    socket.on("message", (message: IMessage) => {
+      setMessages((messages) => messages.concat(message));
+
+      if (message.isPinned) {
+        handleToggleFavorite(message.id);
+      }
+    });
+
     socket.on("select", (message: IMessage) => setSelected(message?.id));
 
     return () => {
