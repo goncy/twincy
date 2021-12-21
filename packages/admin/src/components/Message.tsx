@@ -38,6 +38,7 @@ const Message: React.FC<Props> = ({
         spacing={1}
         variant="card"
         width="100%"
+        wordBreak="break-word"
         onClick={(event) => onClick && onClick(event)}
         {...props}
       >
