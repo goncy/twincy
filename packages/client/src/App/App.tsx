@@ -26,28 +26,30 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AnimatePresence>
-      {selected && (
-        <motion.main
-          animate={{scale: 1}}
-          className={styles.container}
-          exit={{scale: 0}}
-          initial={{scale: 0}}
-        >
-          <div className={styles.sender}>
-            {Boolean(selected.sender.badges?.length) && (
-              <span>
-                {selected.sender.badges?.map((badge) => (
-                  <img key={badge} src={badge} />
-                ))}
-              </span>
-            )}
-            <span dangerouslySetInnerHTML={{__html: selected.sender.name}} />
-          </div>
-          <span className={styles.message} dangerouslySetInnerHTML={{__html: selected.message}} />
-        </motion.main>
-      )}
-    </AnimatePresence>
+    <main className={styles.container}>
+      <AnimatePresence>
+        {selected && (
+          <motion.main
+            animate={{scale: 1}}
+            className={styles.selected}
+            exit={{scale: 0}}
+            initial={{scale: 0}}
+          >
+            <div className={styles.title}>
+              {Boolean(selected.sender.badges?.length) && (
+                <span>
+                  {selected.sender.badges?.map((badge) => (
+                    <img key={badge} src={badge} />
+                  ))}
+                </span>
+              )}
+              <span dangerouslySetInnerHTML={{__html: selected.sender.name}} />
+            </div>
+            <span className={styles.text} dangerouslySetInnerHTML={{__html: selected.message}} />
+          </motion.main>
+        )}
+      </AnimatePresence>
+    </main>
   );
 };
 

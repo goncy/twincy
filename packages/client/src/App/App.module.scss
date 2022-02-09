@@ -1,4 +1,12 @@
 .container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.selected {
   display: flex;
   flex-direction: column;
   background-color: var(--primary);
@@ -7,36 +15,37 @@
   color: white;
   padding: 1.5rem 1.75rem;
   margin-top: auto;
-}
 
-.sender {
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 2.75rem;
-  line-height: normal;
-  margin-bottom: .5rem;
-  display: inline-flex;
-  align-items: center;
+  .title {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 2.75rem;
+    line-height: normal;
+    margin-bottom: .5rem;
+    display: inline-flex;
+    align-items: center;
 
-  img {
-    width: 2rem;
-    height: 2rem;
-    margin-right: 0.5rem;
+    img {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 0.5rem;
+    }
   }
-}
 
-.message {
-  font-weight: 400;
-  font-size: 2rem;
-  display: inline-block;
-
-  i {
-    width: 2rem;
-    height: 2rem;
-    margin: auto 4px;
+  .text {
+    font-weight: 400;
+    font-size: 2rem;
     display: inline-block;
-    vertical-align: sub;
-    background-size: contain;
-    background-position: center;
+
+    i {
+      width: 2rem;
+      height: 2rem;
+      margin: auto 4px;
+      display: inline-block;
+      vertical-align: sub;
+      background-size: contain;
+      background-position: center;
+    }
   }
 }
+

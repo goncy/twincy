@@ -35,22 +35,16 @@ io.on("connection", (socket) => {
 });
 
 client.on("message", (_channel, tags, message) => {
-  const isPinned =
-    tags["user-type"] === "mod" &&
-    message.includes("!pin") &&
-    Boolean(tags["reply-parent-msg-body"]);
-
   io.emit("message", {
     id: tags["id"],
     color: tags.color,
     sender: {
       badges: parseBadges(tags["badges"]),
-      name: isPinned ? `${tags.username} -> ${tags["reply-parent-display-name"]}` : tags.username,
+      name: tags.username,
     },
     timestamp: Number(tags["tmi-sent-ts"]),
-    message: parseMessage(isPinned ? tags["reply-parent-msg-body"] : message, tags["emotes"]),
+    message: parseMessage(message, tags["emotes"]),
     isHighlighted: tags["msg-id"] === "highlighted-message",
-    isPinned,
   });
 });
 
