@@ -14,7 +14,7 @@ const SetupScreen: React.VFC<Props> = ({socket}) => {
   function handleSubmit(event: React.FormEvent<HTMLDivElement>) {
     event.preventDefault();
 
-    socket.emit("channel", channel);
+    socket.emit("channel", channel.trim());
   }
 
   React.useEffect(() => {
@@ -52,7 +52,7 @@ const SetupScreen: React.VFC<Props> = ({socket}) => {
               onChange={(e) => setChannel(e.target.value)}
             />
             <Button colorScheme="primary" size="lg" type="submit">
-              Submit
+              Connect
             </Button>
           </Stack>
         </Stack>
