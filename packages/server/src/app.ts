@@ -5,7 +5,6 @@ import * as tmi from "tmi.js";
 import * as SocketIO from "socket.io";
 import * as express from "express";
 
-import {CHANNEL} from "./constants";
 import {Message} from "./types";
 import {parseMessage} from "./utils/message";
 import {parseBadges} from "./utils/badges";
@@ -18,7 +17,7 @@ const io = new SocketIO.Server({
   },
 });
 const client = new tmi.Client({
-  channels: [CHANNEL],
+  channels: [],
 });
 
 io.attach(server);
@@ -31,10 +30,28 @@ app.use(
 );
 
 io.on("connection", (socket) => {
+  // Listen for changes on the selected message
   socket.on("select", (message: Message) => io.emit("select", message));
+
+  // Listen for changes on the twitch channel
+  socket.on("channel", async (channel: string) => {
+    // Leave all channels
+    client.getChannels().forEach(async (channel: string) => {
+      await client.part(channel);
+    });
+
+    if (channel) {
+      // Join new channel
+      await client.join(channel);
+    }
+
+    // Emit change
+    io.emit("channel", channel);
+  });
 });
 
 client.on("message", (_channel, tags, message) => {
+  // On twitch message, send message to admin
   io.emit("message", {
     id: tags["id"],
     color: tags.color,
@@ -48,6 +65,7 @@ client.on("message", (_channel, tags, message) => {
   });
 });
 
+// Send the admin panel, used by electron
 app.get("/admin", (_req, res) => {
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.resolve(__dirname + "/../../admin/dist")));
@@ -58,6 +76,7 @@ app.get("/admin", (_req, res) => {
   }
 });
 
+// Send the client, used by electron
 app.get("/client", (_req, res) => {
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.resolve(__dirname + "/../../client/dist")));
@@ -68,8 +87,11 @@ app.get("/client", (_req, res) => {
   }
 });
 
+// Connect to the server
 server.listen(8000, () => {
-  console.log(`Listening on port 8000`);
-
+  // Connect to twitch
   client.connect();
+
+  // Log connection
+  console.log(`Listening on port 8000`);
 });
