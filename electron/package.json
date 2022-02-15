@@ -1,6 +1,6 @@
 {
   "name": "@goncy/twincy-electron",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "license": "MIT",
   "productName": "twincy",
   "description": "Show featured messages on your screen",
