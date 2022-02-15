@@ -1,6 +1,6 @@
 {
   "name": "@goncy/twincy-electron",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "license": "MIT",
   "productName": "twincy",
   "description": "Show featured messages on your screen",
@@ -34,7 +34,7 @@
       "electronPackagerConfig": {
         "packageManager": "yarn",
         "icon": "src/assets/icon.ico",
-        "win32metadata":{
+        "win32metadata": {
           "ProductName": "Twincy",
           "CompanyName": "goncy"
         }
