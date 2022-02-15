@@ -2,13 +2,18 @@ import React from "react";
 import {Box, Image, Stack, StackProps, Text, Flex} from "@chakra-ui/react";
 import {LockIcon, StarIcon} from "@chakra-ui/icons";
 
-interface Props extends StackProps {
+import {Message as IMessage} from "~/types";
+
+interface Props extends Omit<StackProps, "onSelect"> {
   variant?: "featured" | "normal";
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  // onClick?: React.MouseEventHandler<HTMLElement>;
+  onFavorite?: (id: IMessage["id"]) => void;
+  onSelect?: (message: IMessage) => void;
+  onBookmark?: (id: IMessage["id"]) => void;
   sender: string;
   badges?: string[];
   timestamp: number;
-  message: string;
+  message: IMessage;
   isHighlighted?: boolean;
   isFavorite?: boolean;
   isSelected?: boolean;
@@ -20,6 +25,9 @@ const Message: React.FC<Props> = ({
   badges,
   timestamp,
   sender,
+  onFavorite,
+  onBookmark,
+  onSelect,
   isSelected = false,
   isFavorite = false,
   isHighlighted = false,
@@ -39,7 +47,13 @@ const Message: React.FC<Props> = ({
         variant="card"
         width="100%"
         wordBreak="break-word"
-        onClick={(event) => onClick && onClick(event)}
+        onClick={({ctrlKey, altKey}) =>
+          ctrlKey
+            ? onFavorite?.(message.id)
+            : altKey
+            ? onBookmark?.(message.id)
+            : onSelect?.(message)
+        }
         {...props}
       >
         <Stack alignItems="center" direction="row">
@@ -77,7 +91,7 @@ const Message: React.FC<Props> = ({
         >
           <Box
             as="span"
-            dangerouslySetInnerHTML={{__html: message}}
+            dangerouslySetInnerHTML={{__html: message.message}}
             display="inline-block"
             fontSize="xl"
             sx={{
@@ -97,7 +111,13 @@ const Message: React.FC<Props> = ({
       </Stack>
       <Flex direction="column" height={74} justifyContent="space-between" paddingY={1.5}>
         <LockIcon height={6} textStyle={isHighlighted ? "secondary" : "translucid"} width={6} />
-        <StarIcon height={6} textStyle={isFavorite ? "primary" : "translucid"} width={6} />
+        <StarIcon
+          cursor="pointer"
+          height={6}
+          textStyle={isFavorite ? "primary" : "translucid"}
+          width={6}
+          onClick={() => onFavorite?.(message.id)}
+        />
       </Flex>
     </Stack>
   );

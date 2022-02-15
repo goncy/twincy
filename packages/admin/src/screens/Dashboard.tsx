@@ -75,13 +75,14 @@ const DashboardScreen: React.VFC<Props> = ({socket}) => {
   React.useEffect(() => {
     socket.on("message", (message: IMessage) => {
       setMessages((messages) => messages.concat(message));
-
-      if (message.isPinned) {
-        handleToggleFavorite(message.id);
-      }
     });
 
     socket.on("select", (message: IMessage) => setSelected(message?.id));
+
+    return () => {
+      socket.off("message");
+      socket.off("select");
+    };
   }, [socket]);
 
   return (
@@ -123,16 +124,12 @@ const DashboardScreen: React.VFC<Props> = ({socket}) => {
                       isFavorite={favorites.includes(message.id)}
                       isHighlighted={message.isHighlighted}
                       isSelected={isSelected}
-                      message={message.message}
+                      message={message}
                       sender={message.sender.name}
                       timestamp={message.timestamp}
-                      onClick={({ctrlKey, altKey}) =>
-                        ctrlKey
-                          ? handleToggleFavorite(message.id)
-                          : altKey
-                          ? handleToggleBookmark(message.id)
-                          : handleToggleSelected(message)
-                      }
+                      onBookmark={() => handleToggleBookmark(message.id)}
+                      onFavorite={() => handleToggleFavorite(message.id)}
+                      onSelect={() => handleToggleSelected(message)}
                     />
                     {bookmark === message.id && (
                       <Bookmark cursor="pointer" onClick={() => setBookmark(null)} />
@@ -165,14 +162,11 @@ const DashboardScreen: React.VFC<Props> = ({socket}) => {
                       badges={message.sender.badges}
                       isHighlighted={message.isHighlighted}
                       isSelected={isSelected}
-                      message={message.message}
+                      message={message}
                       sender={message.sender.name}
                       timestamp={message.timestamp}
-                      onClick={(event) =>
-                        event.ctrlKey
-                          ? handleToggleFavorite(message.id)
-                          : handleToggleSelected(message)
-                      }
+                      onFavorite={() => handleToggleFavorite(message.id)}
+                      onSelect={() => handleToggleSelected(message)}
                     />
                   );
                 })

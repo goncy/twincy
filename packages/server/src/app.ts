@@ -51,6 +51,17 @@ io.on("connection", (socket) => {
 });
 
 client.on("message", (_channel, tags, message) => {
+  // Store the draft message
+  let text = message;
+
+  // Check if the message is a question
+  const isQuestion = text.startsWith("!question ");
+
+  // If is a question, strip the command
+  if (isQuestion) {
+    text = text.replace("!question ", "");
+  }
+
   // On twitch message, send message to admin
   io.emit("message", {
     id: tags["id"],
@@ -60,8 +71,8 @@ client.on("message", (_channel, tags, message) => {
       name: tags.username,
     },
     timestamp: Number(tags["tmi-sent-ts"]),
-    message: parseMessage(message, tags["emotes"]),
-    isHighlighted: tags["msg-id"] === "highlighted-message",
+    message: parseMessage(text, tags["emotes"]),
+    isHighlighted: isQuestion || tags["msg-id"] === "highlighted-message",
   });
 });
 
