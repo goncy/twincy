@@ -19,6 +19,9 @@ See all chat messages and click one to feature it on the stream.
 * Ctrl + Click: Send / remove a message from queue
 * Alt + Click: Toggle bookmark
 
+## Commands
+!question <question> // Automatically highlights the message
+
 ## Development instructions
 * Run `npm start` on the console while being in this directory
 
