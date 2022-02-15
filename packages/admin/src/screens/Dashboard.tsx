@@ -34,8 +34,8 @@ const DashboardScreen: React.VFC<Props> = ({socket}) => {
   const [favorites, setFavorites] = React.useState<IMessage["id"][]>([]);
   const {onCopy} = useClipboard(
     process.env.NODE_ENV === "production"
-      ? `http://localhost:8000/client`
-      : `http://localhost:8001`,
+      ? `http://localhost:6600/client`
+      : `http://localhost:6601`,
   );
   const toast = useToast();
 

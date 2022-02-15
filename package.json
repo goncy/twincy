@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "Goncy",
   "scripts": {
-    "kill": "kill-port --port 8000,8001,8002",
+    "kill": "kill-port --port 6600,6601,6602",
     "build": "lerna run build --parallel --stream",
     "prestart": "npm install && lerna bootstrap",
     "start": "lerna run start --parallel --stream",

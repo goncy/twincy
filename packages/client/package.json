@@ -2,10 +2,10 @@
   "name": "@goncy/twincy-client",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --port=8001",
+    "dev": "vite --port=6601",
     "build": "tsc && vite build",
     "prestart": "npm run build",
-    "start": "vite preview --port=8001"
+    "start": "vite preview --port=6601"
   },
   "dependencies": {
     "framer-motion": "^4.1.17",

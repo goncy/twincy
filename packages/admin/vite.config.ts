@@ -9,7 +9,7 @@ export default defineConfig({
     include: ["socket.io-client"],
   },
   server: {
-    port: 8000,
+    port: 6600,
   },
   resolve: {
     alias: [

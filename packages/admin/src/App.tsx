@@ -4,7 +4,7 @@ import SocketIO from "socket.io-client";
 import DashboardScreen from "./screens/Dashboard";
 import SetupScreen from "./screens/Setup";
 
-const socket = SocketIO(process.env.NODE_ENV === "production" ? "/" : "http://localhost:8000");
+const socket = SocketIO(process.env.NODE_ENV === "production" ? "/" : "http://localhost:6600");
 
 const App: React.FC = () => {
   const [channel, setChannel] = React.useState<string | null>(null);

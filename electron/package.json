@@ -7,7 +7,7 @@
   "main": "src/main.js",
   "author": "Goncy",
   "scripts": {
-    "kill": "kill-port --port 8000,8001,8002",
+    "kill": "kill-port --port 6600,6601,6602",
     "build": "cd ../ && npm run build",
     "postbuild": "node ./scripts/packages.js",
     "predev": "npm run kill",

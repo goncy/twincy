@@ -2,10 +2,10 @@
   "name": "@goncy/twincy-admin",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --port=8002",
+    "dev": "vite --port=6602",
     "build": "tsc && vite build",
     "prestart": "npm run build",
-    "start": "vite preview --port=8002"
+    "start": "vite preview --port=6602"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.13",

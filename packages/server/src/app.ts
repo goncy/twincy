@@ -72,7 +72,7 @@ app.get("/admin", (_req, res) => {
 
     res.sendFile("index.html", {root: path.resolve(__dirname + "/../../admin/dist")});
   } else {
-    res.redirect("http://localhost:8002");
+    res.redirect("http://localhost:6602");
   }
 });
 
@@ -83,15 +83,15 @@ app.get("/client", (_req, res) => {
 
     res.sendFile(path.resolve(__dirname + "/../../client/dist/index.html"));
   } else {
-    res.redirect("http://localhost:8001");
+    res.redirect("http://localhost:6601");
   }
 });
 
 // Connect to the server
-server.listen(8000, () => {
+server.listen(6600, () => {
   // Connect to twitch
   client.connect();
 
   // Log connection
-  console.log(`Listening on port 8000`);
+  console.log(`Listening on port 6600`);
 });
