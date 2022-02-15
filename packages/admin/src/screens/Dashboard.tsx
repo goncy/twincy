@@ -32,7 +32,7 @@ const DashboardScreen: React.VFC<Props> = ({socket}) => {
   const [selected, setSelected] = React.useState<null | IMessage["id"]>(null);
   const [bookmark, setBookmark] = React.useState<null | IMessage["id"]>(null);
   const [favorites, setFavorites] = React.useState<IMessage["id"][]>([]);
-  const {onCopy} = useClipboard(`http://localhost:8001`);
+  const {onCopy} = useClipboard(`http://localhost:8000/client`);
   const toast = useToast();
 
   function handleToggleSelected(message: IMessage) {
