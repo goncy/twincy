@@ -55,11 +55,11 @@ client.on("message", (_channel, tags, message) => {
   let text = message;
 
   // Check if the message is a question
-  const isQuestion = text.startsWith("!question ");
+  const isQuestion = text.startsWith("!q ");
 
   // If is a question, strip the command
   if (isQuestion) {
-    text = text.replace("!question ", "");
+    text = text.replace("!q ", "");
   }
 
   // On twitch message, send message to admin
