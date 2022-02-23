@@ -23,10 +23,14 @@ See all chat messages and click one to feature it on the stream.
 !q <question> // Automatically highlights the message
 
 ## Development instructions
-* Run `npm start` on the console while being in this directory
+* Install dependencies: `npm install` in the root directory
+* Run app in dev mode:
+  - Browser: `npm run dev`
+  - Desktop: in separate terminals execute `npm run dev` and `npm run dev:tauri`
 
-## Standalone app
-The standalone app is not yet distributed, but if you want to build it, go inside the `electron` folder and run `npm run make`, it will generate an `out` directory with the `.exe` inside.
+
+## Build standalone app
+From the root directory you can execute the command `npm run build:tauri` to generate the desktop app for the OS you are running the app from, this will generate several files in the folder `./packages/admin/src-tauri/target/release` including the `twincy-admin.exe` in the case of Windows
 
 ---
 Follow me on [Twitter](https://twitter.gonzalopozzo.com), on [Twitch](https://twitch.gonzalopozzo.com) and doname un [Cafecito](https://cafecito.gonzalopozzo.com) ✨

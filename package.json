@@ -4,12 +4,14 @@
   "license": "MIT",
   "author": "Goncy",
   "scripts": {
+    "postinstall": "lerna bootstrap",
     "kill": "kill-port --port 6600,6601,6602",
     "build": "lerna run build --parallel --stream",
-    "prestart": "npm install && lerna bootstrap",
+    "build:tauri": "lerna run tauri -- build",
     "start": "lerna run start --parallel --stream",
     "predev": "npm run kill",
-    "dev": "lerna run dev --parallel --stream"
+    "dev": "lerna run dev --parallel --stream",
+    "dev:tauri": "lerna run tauri -- dev"
   },
   "devDependencies": {
     "kill-port": "^1.6.1",
