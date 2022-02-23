@@ -20,7 +20,8 @@ See all chat messages and click one to feature it on the stream.
 * Alt + Click: Toggle bookmark
 
 ## Commands
-!q <question> // Automatically highlights the message
+* !q <question> // Automatically highlights the message
+> Tagging the user also highlights the message
 
 ## Development instructions
 * Run `npm start` on the console while being in this directory

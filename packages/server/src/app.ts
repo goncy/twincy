@@ -50,12 +50,18 @@ io.on("connection", (socket) => {
   });
 });
 
-client.on("message", (_channel, tags, message) => {
+client.on("message", (channel, tags, message) => {
   // Store the draft message
   let text = message;
 
   // Check if the message is a question
   const isQuestion = text.startsWith("!q ");
+
+  // Check if user bought a prize
+  const isPrize = tags["msg-id"] === "highlighted-message";
+
+  // Check if the user tagged you
+  const isTag = message.toLowerCase().includes(channel.replace("#", "").toLowerCase());
 
   // If is a question, strip the command
   if (isQuestion) {
@@ -72,7 +78,7 @@ client.on("message", (_channel, tags, message) => {
     },
     timestamp: Number(tags["tmi-sent-ts"]),
     message: parseMessage(text, tags["emotes"]),
-    isHighlighted: isQuestion || tags["msg-id"] === "highlighted-message",
+    isHighlighted: isQuestion || isPrize || isTag,
   });
 });
 
