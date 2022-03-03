@@ -2,9 +2,10 @@
   "name": "@goncy/twincy-runner",
   "version": "1.1.0",
   "license": "MIT",
+  "type": "module",
   "author": "Goncy",
   "scripts": {
-    "kill": "kill-port --port 6600,6601,6602",
+    "kill": "kill-port --port 6600,6601",
     "build": "lerna run build --parallel --stream",
     "prestart": "npm install && lerna bootstrap",
     "start": "lerna run start --parallel --stream",

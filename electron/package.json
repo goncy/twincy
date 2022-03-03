@@ -1,13 +1,13 @@
 {
   "name": "@goncy/twincy-electron",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "license": "MIT",
   "productName": "twincy",
   "description": "Show featured messages on your screen",
   "main": "src/main.js",
   "author": "Goncy",
   "scripts": {
-    "kill": "kill-port --port 6600,6601,6602",
+    "kill": "kill-port --port 6600,6601",
     "build": "cd ../ && npm run build",
     "postbuild": "node ./scripts/packages.js",
     "predev": "npm run kill",
@@ -32,7 +32,10 @@
         ]
       },
       "electronPackagerConfig": {
-        "packageManager": "yarn",
+        "ignore": [
+          "packages"
+        ],
+        "packageManager": "npm",
         "icon": "src/assets/icon.ico",
         "win32metadata": {
           "ProductName": "Twincy",

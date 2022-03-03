@@ -31,11 +31,11 @@ function createWindow () {
 
   // Load the splash
   splash.loadFile(path.join(__dirname, '/splash.html'));
-  main.loadURL('http://localhost:6600/admin');
+  main.loadURL('http://localhost:6601/messages/admin');
 
   // If server is not ready, try again
   main.webContents.on('did-fail-load', () => {
-    main.loadURL('http://localhost:6600/admin');
+    main.loadURL('http://localhost:6601/messages/admin');
   });
 
   // Remove splash when app is ready
@@ -49,7 +49,8 @@ app.whenReady().then(() => {
   if (isDev) {
     exec('cd .. && npm run dev');
   } else {
-    require('../packages/server/dist/app');
+    exec('cd packages/server && npm start');
+    exec('cd packages/client && npm start');
   }
 
   createWindow();

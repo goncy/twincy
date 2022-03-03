@@ -1,5 +1,4 @@
 import * as http from "http";
-import * as path from "path";
 
 import * as tmi from "tmi.js";
 import * as SocketIO from "socket.io";
@@ -51,57 +50,19 @@ io.on("connection", (socket) => {
 });
 
 client.on("message", (channel, tags, message) => {
-  // Store the draft message
-  let text = message;
-
-  // Check if the message is a question
-  const isQuestion = text.startsWith("!q ");
-
-  // Check if user bought a prize
-  const isPrize = tags["msg-id"] === "highlighted-message";
-
-  // Check if the user tagged you
-  const isTag = message.toLowerCase().includes(channel.replace("#", "").toLowerCase());
-
-  // If is a question, strip the command
-  if (isQuestion) {
-    text = text.replace("!q ", "");
-  }
-
   // On twitch message, send message to admin
   io.emit("message", {
     id: tags["id"],
     color: tags.color,
+    channel: channel.replace("#", "").toLowerCase(),
     sender: {
       badges: parseBadges(tags["badges"]),
       name: tags.username,
     },
+    tags,
     timestamp: Number(tags["tmi-sent-ts"]),
-    message: parseMessage(text, tags["emotes"]),
-    isHighlighted: isQuestion || isPrize || isTag,
+    message: parseMessage(message, tags["emotes"]),
   });
-});
-
-// Send the admin panel, used by electron
-app.get("/admin", (_req, res) => {
-  if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.resolve(__dirname + "/../../admin/dist")));
-
-    res.sendFile("index.html", {root: path.resolve(__dirname + "/../../admin/dist")});
-  } else {
-    res.redirect("http://localhost:6602");
-  }
-});
-
-// Send the client, used by electron
-app.get("/client", (_req, res) => {
-  if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.resolve(__dirname + "/../../client/dist")));
-
-    res.sendFile(path.resolve(__dirname + "/../../client/dist/index.html"));
-  } else {
-    res.redirect("http://localhost:6601");
-  }
 });
 
 // Connect to the server

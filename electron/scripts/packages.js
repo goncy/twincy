@@ -1,13 +1,17 @@
 const path = require('path');
 const fs = require('fs-extra');
+const { exec } = require('child_process');
 
-const packages = {
-  server: path.join(__dirname, '/../../packages/server/dist'),
-  client: path.join(__dirname, '/../../packages/client/dist'),
-  admin: path.join(__dirname, '/../../packages/admin/dist')
-};
 const dest = path.join(__dirname, '/../packages');
+const packages = {
+  server: path.join(__dirname, '/../../packages/server'),
+  client: path.join(__dirname, '/../../packages/client')
+};
 
 fs.emptyDirSync(dest);
 
-Object.entries(packages).forEach(([pkg, path]) => fs.copySync(path, `${dest}/${pkg}/dist`));
+fs.copySync(packages.server, `${dest}/server`);
+fs.copySync(packages.client, `${dest}/client`);
+
+exec(`cd ${dest}/server && npm install && npm run build`);
+exec(`cd ${dest}/client && npm install && npm run build`);
