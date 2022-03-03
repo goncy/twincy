@@ -45,7 +45,7 @@ const SetupScreen: NextPage<Props> = ({socket}) => {
           shadow="lg"
           width="100%"
         >
-          <Text fontWeight="500" textStyle="title" textTransform="uppercase">
+          <Text color="solid" fontWeight="500" textTransform="uppercase">
             Channel name
           </Text>
           <Stack as="form" overflowY="auto" spacing={4} onSubmit={handleSubmit}>

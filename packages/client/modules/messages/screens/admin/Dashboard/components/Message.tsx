@@ -20,7 +20,6 @@ interface Props extends Omit<StackProps, "onSelect"> {
 }
 
 const Message: React.FC<Props> = ({
-  onClick,
   message,
   badges,
   timestamp,
@@ -37,14 +36,13 @@ const Message: React.FC<Props> = ({
     <Stack alignItems="flex-start" direction="row" spacing={3}>
       <Stack
         alignItems="flex-start"
+        backgroundColor={isSelected ? "primary" : "content"}
         borderRadius="md"
-        cursor={onClick ? "pointer" : "inherit"}
+        cursor={onSelect ? "pointer" : "inherit"}
         display="inline-flex"
-        layerStyle={isSelected ? "alert" : "card"}
         paddingX={4}
         paddingY={2}
         spacing={1}
-        variant="card"
         width="100%"
         wordBreak="break-word"
         onClick={({ctrlKey, altKey}) =>
@@ -75,16 +73,16 @@ const Message: React.FC<Props> = ({
             <Box
               alignItems="center"
               as="p"
+              color={isSelected ? "white" : "solid"}
               dangerouslySetInnerHTML={{__html: sender}}
               display="inline-flex"
               fontSize="xl"
               fontWeight="normal"
               lineHeight="normal"
               textShadow="0 0 5px rgba(0,0,0,0.1)"
-              textStyle={isSelected ? "white" : "title"}
               textTransform="uppercase"
             />
-            <Text fontSize="xs" textStyle={isSelected ? "white" : "soft"}>
+            <Text color={isSelected ? "white" : "soft"} fontSize="xs">
               {new Date(Number(timestamp)).toLocaleTimeString()}
             </Text>
           </Stack>
@@ -98,6 +96,7 @@ const Message: React.FC<Props> = ({
         >
           <Box
             as="span"
+            color={isSelected ? "white" : "soft"}
             dangerouslySetInnerHTML={{__html: message.message}}
             display="inline-block"
             fontSize="xl"
@@ -112,16 +111,15 @@ const Message: React.FC<Props> = ({
                 verticalAlign: "sub",
               },
             }}
-            textStyle={isSelected ? "white" : "soft"}
           />
         </Stack>
       </Stack>
       <Flex direction="column" height={74} justifyContent="space-between" paddingY={1.5}>
-        <LockIcon height={6} textStyle={isHighlighted ? "secondary" : "translucid"} width={6} />
+        <LockIcon color={isHighlighted ? "secondary" : "translucid"} height={6} width={6} />
         <StarIcon
+          color={isFavorite ? "primary" : "translucid"}
           cursor="pointer"
           height={6}
-          textStyle={isFavorite ? "primary" : "translucid"}
           width={6}
           onClick={() => onFavorite?.(message.id)}
         />

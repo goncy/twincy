@@ -97,7 +97,7 @@ const DashboardScreen: NextPage<Props> = ({socket}) => {
         spacing={4}
       >
         <Stack flex={1}>
-          <Text fontWeight="500" textStyle="title" textTransform="uppercase">
+          <Text color="solid" fontWeight="500" textTransform="uppercase">
             All messages
           </Text>
           <Stack flex={1} overflowY="auto" spacing={4}>
@@ -133,7 +133,7 @@ const DashboardScreen: NextPage<Props> = ({socket}) => {
           </Stack>
         </Stack>
         <Stack flex={1}>
-          <Text fontWeight="500" textStyle="title" textTransform="uppercase">
+          <Text color="solid" fontWeight="500" textTransform="uppercase">
             Favorites
           </Text>
           <Stack flex={1} overflowY="auto" spacing={4}>

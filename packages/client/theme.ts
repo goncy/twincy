@@ -1,5 +1,4 @@
 import {extendTheme, theme} from "@chakra-ui/react";
-import {mode} from "@chakra-ui/theme-tools";
 
 export default extendTheme({
   colors: {
@@ -27,70 +26,37 @@ export default extendTheme({
     mono: "Menlo, monospace",
   },
   styles: {
-    global: (props: any) => ({
+    global: {
       "html, body, #__next": {
         height: "100%",
         maxHeight: "100vh",
-        backgroundColor: mode("light.200", "dark.900")(props),
+        backgroundColor: "light.200",
         overflow: "hidden",
-      },
-    }),
-  },
-  layerStyles: {
-    card: {
-      ".chakra-ui-light &": {
-        backgroundColor: "white",
-        _hover: {
-          backgroundColor: "light.100",
-        },
-      },
-      ".chakra-ui-dark &": {
-        backgroundColor: "dark.800",
-        _hover: {
-          backgroundColor: "dark.700",
+        _dark: {
+          backgroundColor: "dark.900",
         },
       },
     },
-    alert: {
-      backgroundColor: "primary.500",
-    },
   },
-  textStyles: {
-    white: {
-      color: "white",
-    },
-    primary: {
-      "&": {
-        color: "primary.500",
+  semanticTokens: {
+    colors: {
+      primary: "primary.500",
+      secondary: "secondary.500",
+      content: {
+        default: "white",
+        _dark: "dark.800",
       },
-    },
-    secondary: {
-      "&": {
-        color: "secondary.500",
+      solid: {
+        default: "black",
+        _dark: "white",
       },
-    },
-    translucid: {
-      ".chakra-ui-light &": {
-        color: "blackAlpha.100",
+      soft: {
+        default: "blackAlpha.800",
+        _dark: "whiteAlpha.800",
       },
-      ".chakra-ui-dark &": {
-        color: "whiteAlpha.100",
-      },
-    },
-    title: {
-      ".chakra-ui-light &": {
-        color: "black",
-      },
-      ".chakra-ui-dark &": {
-        color: "white",
-      },
-    },
-    soft: {
-      ".chakra-ui-light &": {
-        color: "blackAlpha.800",
-      },
-      ".chakra-ui-dark &": {
-        color: "whiteAlpha.800",
+      translucid: {
+        default: "blackAlpha.200",
+        _dark: "whiteAlpha.200",
       },
     },
   },
