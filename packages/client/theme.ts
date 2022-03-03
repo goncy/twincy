@@ -30,8 +30,11 @@ export default extendTheme({
       "html, body, #__next": {
         height: "100%",
         maxHeight: "100vh",
-        backgroundColor: "light.200",
         overflow: "hidden",
+      },
+      body: {
+        transition: "background-color 0, background-0",
+        backgroundColor: "light.200",
         _dark: {
           backgroundColor: "dark.900",
         },

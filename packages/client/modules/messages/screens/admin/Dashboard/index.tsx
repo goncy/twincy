@@ -61,15 +61,20 @@ const DashboardScreen: NextPage<Props> = ({socket}) => {
   }
 
   useEffect(() => {
-    socket.on("message", (event: EventMessage) => {
-      setMessages((messages) => messages.concat(parseMessage(event)));
-    });
+    function handleSelect(message: EventMessage) {
+      setSelected(message?.id);
+    }
 
-    socket.on("select", (message: EventMessage) => setSelected(message?.id));
+    function handleMesage(event: EventMessage) {
+      setMessages((messages) => messages.concat(parseMessage(event)));
+    }
+
+    socket.on("message", handleMesage);
+    socket.on("select", handleSelect);
 
     return () => {
-      socket.off("message");
-      socket.off("select");
+      socket.off("message", handleMesage);
+      socket.off("select", handleSelect);
     };
   }, [socket]);
 

@@ -24,7 +24,17 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
   const [selected, setSelected] = useState<null | Message>(null);
 
   useEffect(() => {
-    socket.on("select", (message: Message) => setSelected(message));
+    function handleSelect(message: Message) {
+      setSelected(message);
+    }
+
+    // Set handler
+    socket.on("select", handleSelect);
+
+    return () => {
+      // Remove handler
+      socket.off("select", handleSelect);
+    };
   }, [socket]);
 
   return (
@@ -68,7 +78,7 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
               <Text
                 dangerouslySetInnerHTML={{__html: selected.message}}
                 display="inline-block"
-                fontSize="xl"
+                fontSize="2xl"
                 fontWeight={400}
                 sx={{
                   "& i": {
