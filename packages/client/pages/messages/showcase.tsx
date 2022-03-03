@@ -1,23 +1,18 @@
 import type {NextPage} from "next";
+import type {Socket} from "socket.io-client";
 
-import {ChakraProvider} from "@chakra-ui/react";
 import SocketIO from "socket.io-client";
 
 import ShowcaseScreen from "@/messages/screens/showcase";
-import theme from "@/messages/screens/showcase/theme";
 
 const socket = SocketIO("http://localhost:6600");
 
-const AdminPage: NextPage = () => {
+interface Props {
+  socket: Socket;
+}
+
+const ShowcasePage: NextPage<Props> = () => {
   return <ShowcaseScreen socket={socket} />;
 };
 
-const ShowcasePageContainer: React.VFC = () => {
-  return (
-    <ChakraProvider theme={theme}>
-      <AdminPage />
-    </ChakraProvider>
-  );
-};
-
-export default ShowcasePageContainer;
+export default ShowcasePage;

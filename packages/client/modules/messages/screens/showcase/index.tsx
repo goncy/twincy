@@ -28,7 +28,7 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
   }, [socket]);
 
   return (
-    <Flex direction="column" flex={1}>
+    <Box bottom={0} padding={6} position="absolute" width="100%">
       <AnimatePresence>
         {selected && (
           <motion.main
@@ -86,7 +86,7 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
           </motion.main>
         )}
       </AnimatePresence>
-    </Flex>
+    </Box>
   );
 };
 

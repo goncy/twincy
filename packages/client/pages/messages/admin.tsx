@@ -1,35 +1,25 @@
-import {useState, useEffect} from "react";
-import {ChakraProvider} from "@chakra-ui/react";
-import SocketIO from "socket.io-client";
+import type {Socket} from "socket.io-client";
+import type {NextPage} from "next";
 
-import theme from "@/messages/screens/admin/theme";
+import {useState, useEffect} from "react";
+
 import DashboardScreen from "@/messages/screens/admin/Dashboard";
 import SetupScreen from "@/messages/screens/admin/Setup";
 
-const socket = SocketIO("http://localhost:6600");
+interface Props {
+  socket: Socket;
+}
 
-const AdminPage: React.VFC = () => {
+const AdminPage: NextPage<Props> = ({socket}) => {
   const [channel, setChannel] = useState<string | null>(null);
 
   useEffect(() => {
     socket.on("channel", (channel: string) => setChannel(channel));
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  }, [socket]);
 
   if (!channel) return <SetupScreen socket={socket} />;
 
   return <DashboardScreen socket={socket} />;
 };
 
-const AdminPageContainer: React.VFC = () => {
-  return (
-    <ChakraProvider theme={theme}>
-      <AdminPage />
-    </ChakraProvider>
-  );
-};
-
-export default AdminPageContainer;
+export default AdminPage;

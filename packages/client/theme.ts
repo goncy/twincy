@@ -3,13 +3,13 @@ import {mode} from "@chakra-ui/theme-tools";
 
 export default extendTheme({
   colors: {
-    secondary: {
-      ...theme.colors.yellow,
-      500: "#EAD30A",
-    },
     primary: {
       ...theme.colors.purple,
       500: "#5C16C5",
+    },
+    secondary: {
+      ...theme.colors.yellow,
+      500: "#EAD30A",
     },
     dark: {
       900: "#181818",
@@ -32,6 +32,7 @@ export default extendTheme({
         height: "100%",
         maxHeight: "100vh",
         backgroundColor: mode("light.200", "dark.900")(props),
+        overflow: "hidden",
       },
     }),
   },
