@@ -33,16 +33,17 @@ export default extendTheme({
         overflow: "hidden",
       },
       body: {
-        transition: "background-color 0, background-0",
-        backgroundColor: "light.200",
-        _dark: {
-          backgroundColor: "dark.900",
-        },
+        transition: "background 0",
+        backgroundColor: "transparent",
       },
     },
   },
   semanticTokens: {
     colors: {
+      background: {
+        default: "light.200",
+        _dark: "dark.900",
+      },
       primary: "primary.500",
       secondary: "secondary.500",
       content: {

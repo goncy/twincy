@@ -79,7 +79,7 @@ const DashboardScreen: NextPage<Props> = ({socket}) => {
   }, [socket]);
 
   return (
-    <Stack height="100%" spacing={4}>
+    <Stack backgroundColor="background" height="100%" spacing={4}>
       <Navbar>
         <CopyIcon color="white" cursor="pointer" height={5} width={5} onClick={handleCopySource} />
         <DeleteIcon color="white" cursor="pointer" height={5} width={5} onClick={handleClear} />
