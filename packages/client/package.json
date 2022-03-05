@@ -16,6 +16,7 @@
     "framer-motion": "^6.2.8",
     "next": "12.1.0",
     "react": "17.0.2",
+    "react-confetti": "^6.0.1",
     "react-dom": "17.0.2",
     "socket.io-client": "^4.4.1"
   },

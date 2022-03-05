@@ -1,14 +1,14 @@
 import type {Socket} from "socket.io-client";
 import type {NextPage} from "next";
 
-import DashboardScreen from "@/messages/screens/admin/Dashboard";
+import AdminScreen from "@/messages/screens/admin";
 
 interface Props {
   socket: Socket;
 }
 
 const AdminPage: NextPage<Props> = ({socket}) => {
-  return <DashboardScreen socket={socket} />;
+  return <AdminScreen socket={socket} />;
 };
 
 export default AdminPage;

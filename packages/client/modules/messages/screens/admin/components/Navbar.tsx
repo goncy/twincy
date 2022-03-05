@@ -1,5 +1,5 @@
 import React from "react";
-import {useColorModeValue, Stack, useColorMode, Box, Heading} from "@chakra-ui/react";
+import {Stack, useColorMode, Box, Heading} from "@chakra-ui/react";
 import {ChatIcon, SunIcon, MoonIcon} from "@chakra-ui/icons";
 
 interface Props {
@@ -7,13 +7,13 @@ interface Props {
 }
 
 const Navbar: React.VFC<Props> = ({children = null}) => {
-  const backgroundColor = useColorModeValue("primary.500", "dark.900");
   const {colorMode, toggleColorMode} = useColorMode();
 
   return (
     <Stack
+      _dark={{backgroundColor: "dark.700"}}
       alignItems="center"
-      backgroundColor={backgroundColor}
+      backgroundColor="primary.500"
       boxShadow="md"
       direction="row"
       justifyContent="space-between"
