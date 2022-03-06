@@ -189,7 +189,7 @@ const PokemonScreen: NextPage<Props> = ({socket}) => {
 
   useEffect(() => {
     function handleMesage(event: EventMessage) {
-      if (!isShowing && !isPlaying && event.message === `!pokeguess`) {
+      if (!isShowing && !isPlaying && event.message === `!pokemon`) {
         setPokemon(getRandomPokemon());
         togglePlaying(true);
         toggleShowing(true);
