@@ -28,7 +28,9 @@ app.use(
   }),
 );
 
-io.sockets.on("connection", async (socket) => {
+io.on("connection", async (socket) => {
+  io.sockets.sockets.forEach((socket) => console.log(socket.handshake.query));
+
   // Get the channel name from the socket
   const channel = (socket.handshake.query.channel as string)?.toLowerCase();
 
@@ -36,6 +38,7 @@ io.sockets.on("connection", async (socket) => {
   if (!channel) {
     return;
   }
+
   // Join the socket to the channel
   await socket.join(channel);
 
@@ -46,7 +49,7 @@ io.sockets.on("connection", async (socket) => {
       await client.join(channel);
     } catch (error) {
       // If you are already joined, TMI will throw an error
-      console.warn("You are probably joined to this channel already");
+      console.warn(error, "You are probably joined to this channel already");
     }
   }
 
@@ -95,11 +98,16 @@ client.on("message", (_channel, tags, message) => {
   });
 });
 
-// Connect to the server
-server.listen(6600, () => {
+async function main() {
   // Connect to twitch
-  client.connect();
+  await client.connect();
 
-  // Log connection
-  console.log(`Listening on port 6600`);
-});
+  // Connect to the server
+  await server.listen(6600);
+
+  // Log ready status
+  console.log(`Listening on port 6600 🚀`);
+}
+
+// Execute main function
+main();

@@ -7,7 +7,7 @@ import {useRouter} from "next/router";
 
 import theme from "~/theme";
 
-const socket = SocketIO("http://localhost:6600", {autoConnect: false});
+const socket = SocketIO("http://localhost:6600", {autoConnect: false, reconnection: true});
 
 const App: React.VFC<AppProps> = ({Component, pageProps}) => {
   const {
@@ -15,11 +15,6 @@ const App: React.VFC<AppProps> = ({Component, pageProps}) => {
   } = useRouter();
 
   useEffect(() => {
-    // Don't run this effect server side
-    if (!process.browser) {
-      return;
-    }
-
     // Only connect if a channel is present
     if (channel) {
       socket.io.opts.query = {channel};
