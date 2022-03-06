@@ -3,6 +3,7 @@ import type {Socket} from "socket.io-client";
 
 import {useEffect, useState} from "react";
 import {Flex, Image, Text} from "@chakra-ui/react";
+import {useRouter} from "next/router";
 
 import {EventMessage} from "~/types";
 
@@ -183,13 +184,21 @@ function cleanString(str: string): string {
 }
 
 const PokemonScreen: NextPage<Props> = ({socket}) => {
+  const {
+    query: {id},
+  } = useRouter();
   const [pokemon, setPokemon] = useState<Pokemon>(() => getRandomPokemon());
   const [isPlaying, togglePlaying] = useState<boolean>(false);
   const [isShowing, toggleShowing] = useState<boolean>(false);
 
   useEffect(() => {
     function handleMesage(event: EventMessage) {
-      if (!isShowing && !isPlaying && event.message === `!pokemon`) {
+      if (
+        !isShowing &&
+        !isPlaying &&
+        event.tags["custom-reward-id"] === id &&
+        event.message.toLowerCase().includes("pokemon")
+      ) {
         setPokemon(getRandomPokemon());
         togglePlaying(true);
         toggleShowing(true);
@@ -207,7 +216,7 @@ const PokemonScreen: NextPage<Props> = ({socket}) => {
     return () => {
       socket.off("message", handleMesage);
     };
-  }, [socket, pokemon.name, isPlaying, isShowing]);
+  }, [socket, pokemon.name, isPlaying, isShowing, id]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;

@@ -28,30 +28,60 @@ app.use(
   }),
 );
 
-io.on("connection", (socket) => {
-  // Listen for changes on the selected message
-  socket.on("select", (message: Message) => io.emit("select", message));
+io.sockets.on("connection", async (socket) => {
+  // Get the channel name from the socket
+  const channel = (socket.handshake.query.channel as string)?.toLowerCase();
 
-  // Listen for changes on the twitch channel
-  socket.on("channel", async (channel: string) => {
-    // Leave all channels
-    client.getChannels().forEach(async (channel: string) => {
-      await client.part(channel);
-    });
+  // If no channel is provided, return
+  if (!channel) {
+    return;
+  }
+  // Join the socket to the channel
+  await socket.join(channel);
 
-    if (channel) {
-      // Join new channel
+  //Check if the channel is in the list of channels
+  if (!client.getChannels().includes(`#${channel}`)) {
+    try {
+      // Join channel
       await client.join(channel);
+    } catch (error) {
+      // If you are already joined, TMI will throw an error
+      console.warn("You are probably joined to this channel already");
     }
+  }
 
-    // Emit change
-    io.emit("channel", channel);
+  socket.on("disconnect", async () => {
+    // Get sockets connected to the channel
+    const sockets = await io.in(channel).allSockets();
+
+    // If no sockets are connected, part from channel
+    if (sockets.size === 0 && client.getChannels().includes(`#${channel}`)) {
+      try {
+        // Part channel
+        await client.part(`#${channel}`);
+      } catch (error) {
+        // If you are already disconnected, TMI will throw an error
+        console.warn("You are probably disconnected from this channel already");
+      }
+    }
+  });
+
+  // Apps related messages
+  // // MESSAGES
+
+  // Listen for changes on the selected message
+  socket.on("select", async (message: Message) => {
+    // Only to self
+    io.to(channel).emit("select", message);
   });
 });
 
-client.on("message", (channel, tags, message) => {
+client.on("message", (_channel, tags, message) => {
+  // Sanitize channel
+  const channel = _channel.replace("#", "").toLowerCase();
+
   // On twitch message, send message to admin
-  io.emit("message", {
+  io.to(channel).emit("message", {
     id: tags["id"],
     color: tags.color,
     channel: channel.replace("#", "").toLowerCase(),

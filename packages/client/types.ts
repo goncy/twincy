@@ -4,6 +4,7 @@ export interface EventMessage {
   channel: string;
   tags: {
     "msg-id": string;
+    "custom-reward-id": string;
   };
   sender: {
     badges: string[];

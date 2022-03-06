@@ -15,13 +15,19 @@ const App: React.VFC<AppProps> = ({Component, pageProps}) => {
   } = useRouter();
 
   useEffect(() => {
-    socket.connect();
+    // Don't run this effect server side
+    if (!process.browser) {
+      return;
+    }
 
+    // Only connect if a channel is present
     if (channel) {
-      socket.emit("channel", (channel as string).trim());
+      socket.io.opts.query = {channel};
+      socket.connect();
     }
 
     return () => {
+      socket.io.opts.query = {};
       socket.disconnect();
     };
   }, [channel]);
