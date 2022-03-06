@@ -29,8 +29,6 @@ app.use(
 );
 
 io.on("connection", async (socket) => {
-  io.sockets.sockets.forEach((socket) => console.log(socket.handshake.query));
-
   // Get the channel name from the socket
   const channel = (socket.handshake.query.channel as string)?.toLowerCase();
 
