@@ -21,6 +21,7 @@ const App: React.VFC<AppProps> = ({Component, pageProps}) => {
       socket.connect();
     }
 
+    // Reset handshake query and disconnect from server
     return () => {
       socket.io.opts.query = {};
       socket.disconnect();
