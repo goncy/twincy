@@ -7,7 +7,7 @@ import {useRouter} from "next/router";
 
 import theme from "~/theme";
 
-const socket = SocketIO("http://localhost:6600", {autoConnect: false, reconnection: true});
+const socket = SocketIO("http://localhost:6600", {autoConnect: false});
 
 const App: React.VFC<AppProps> = ({Component, pageProps}) => {
   const {
