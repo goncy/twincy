@@ -5,6 +5,7 @@ export interface EventMessage {
   tags: {
     "msg-id": string;
     "custom-reward-id": string;
+    mod: boolean;
   };
   sender: {
     badges: string[];
