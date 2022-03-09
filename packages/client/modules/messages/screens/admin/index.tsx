@@ -2,41 +2,34 @@ import type {Socket} from "socket.io-client";
 import type {NextPage} from "next";
 import type {Message as IMessage} from "./types";
 
-import {useEffect, useState} from "react";
-import {
-  Alert,
-  AlertIcon,
-  Flex,
-  Stack,
-  StackDivider,
-  Text,
-  useClipboard,
-  useToast,
-} from "@chakra-ui/react";
-import {ChatIcon, CopyIcon, DeleteIcon} from "@chakra-ui/icons";
-import {useRouter} from "next/router";
+import {useEffect, useMemo, useState} from "react";
+import {Flex, Stack, StackDivider, Text} from "@chakra-ui/react";
+import {ChatIcon, DeleteIcon, StarIcon} from "@chakra-ui/icons";
 
 import type {EventMessage} from "~/types";
+import Navbar from "~/components/Navbar";
 
 import {parseMessage} from "./utils";
 import Message from "./components/Message";
-import Navbar from "./components/Navbar";
 
 interface Props {
   socket: Socket;
 }
 
 const AdminScreen: NextPage<Props> = ({socket}) => {
-  const {
-    query: {channel},
-  } = useRouter();
   const [limit, setLimit] = useState<number>(100);
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [buffer, setBuffer] = useState<IMessage[]>([]);
   const [selected, setSelected] = useState<null | IMessage["id"]>(null);
   const [bookmark, setBookmark] = useState<null | IMessage["id"]>(null);
   const [favorites, setFavorites] = useState<IMessage["id"][]>([]);
-  const {onCopy} = useClipboard(`http://localhost:6601/messages/showcase?channel=${channel}`);
-  const toast = useToast();
+  const [isHighlights, toggleHighlights] = useState<boolean>(false);
+  const messages = useMemo(() => {
+    if (isHighlights) {
+      return buffer.filter((message) => message.isHighlighted);
+    }
+
+    return buffer;
+  }, [buffer, isHighlights]);
 
   function handleToggleSelected(message: IMessage) {
     socket.emit("select", selected === message.id ? null : message);
@@ -53,23 +46,10 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
   }
 
   function handleClear() {
-    setMessages([]);
+    setBuffer([]);
     setSelected(null);
     setBookmark(null);
     setFavorites([]);
-  }
-
-  function handleCopySource() {
-    onCopy();
-    toast({
-      duration: 5000,
-      render: () => (
-        <Alert backgroundColor="primary.500" color="white" status="success" variant="solid">
-          <AlertIcon />
-          Browser source link copied to clipboard!
-        </Alert>
-      ),
-    });
   }
 
   useEffect(() => {
@@ -77,16 +57,16 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
       setSelected(message?.id);
     }
 
-    function handleMesage(event: EventMessage) {
-      setMessages((messages) => messages.concat(parseMessage(event)));
+    function handleMessage(event: EventMessage) {
+      setBuffer((messages) => messages.concat(parseMessage(event)));
     }
 
-    socket.on("message", handleMesage);
-    socket.on("select", handleSelect);
+    socket.on("message", handleMessage);
+    socket.on("messages:select", handleSelect);
 
     return () => {
-      socket.off("message", handleMesage);
-      socket.off("select", handleSelect);
+      socket.off("message", handleMessage);
+      socket.off("messages:select", handleSelect);
     };
   }, [socket]);
 
@@ -94,12 +74,12 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
     <Stack backgroundColor="background" height="100%" spacing={4}>
       <Navbar>
         <Stack alignItems="center" direction="row" spacing={4}>
-          <CopyIcon
-            color="white"
+          <StarIcon
+            color={isHighlights ? "secondary.500" : "white"}
             cursor="pointer"
             height={5}
             width={5}
-            onClick={handleCopySource}
+            onClick={() => toggleHighlights((isHighlights) => !isHighlights)}
           />
           <DeleteIcon color="white" cursor="pointer" height={5} width={5} onClick={handleClear} />
         </Stack>
@@ -182,7 +162,7 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
           </Text>
           <Stack flex={1} overflowY="auto" spacing={4}>
             {Boolean(favorites.length) ? (
-              messages
+              buffer
                 .filter((message) => favorites.includes(message.id))
                 .map((message) => {
                   const isSelected = selected === message.id;

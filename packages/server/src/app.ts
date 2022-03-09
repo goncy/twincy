@@ -71,9 +71,23 @@ io.on("connection", async (socket) => {
   // // MESSAGES
 
   // Listen for changes on the selected message
-  socket.on("select", async (message: Message) => {
+  socket.on("messages:select", async (message: unknown) => {
     // Only to self
-    io.to(channel).emit("select", message);
+    io.to(channel).emit("messages:select", message);
+  });
+
+  // // REVIEW
+
+  // Listen for changes on a single review
+  socket.on("reviews:update", async (review: unknown) => {
+    // Only to self
+    io.to(channel).emit("reviews:update", review);
+  });
+
+  // Listen for changes on all reviews
+  socket.on("reviews:replace", async (reviews: unknown) => {
+    // Only to self
+    io.to(channel).emit("reviews:replace", reviews);
   });
 });
 

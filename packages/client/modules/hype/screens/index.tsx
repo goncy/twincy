@@ -56,7 +56,7 @@ const HypeScreen: NextPage<Props> = ({socket}) => {
         togglePlaying(false);
 
         timeouts.current.forEach(clearTimeout);
-      }, 10000);
+      }, 30000);
     } else if (isShowing && !isPlaying) {
       hide = setTimeout(() => {
         toggleShowing(false);

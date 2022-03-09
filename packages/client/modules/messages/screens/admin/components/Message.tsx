@@ -115,8 +115,8 @@ const Message: React.FC<Props> = ({
         </Stack>
       </Stack>
       <Flex direction="column" height={74} justifyContent="space-between" paddingY={1.5}>
-        <LockIcon color={isHighlighted ? "secondary" : "translucid"} height={6} width={6} />
-        <StarIcon
+        <StarIcon color={isHighlighted ? "secondary" : "translucid"} height={6} width={6} />
+        <LockIcon
           color={isFavorite ? "primary" : "translucid"}
           cursor="pointer"
           height={6}

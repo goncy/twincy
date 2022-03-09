@@ -1,7 +1,7 @@
 import type {NextPage} from "next";
 import type {Socket} from "socket.io-client";
 
-import ReviewScreen from "~/modules/review/screens/index";
+import ReviewScreen from "@/reviews/screens/showcase/index";
 
 interface Props {
   socket: Socket;

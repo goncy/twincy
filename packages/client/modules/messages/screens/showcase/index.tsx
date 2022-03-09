@@ -53,23 +53,23 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
               borderRadius="sm"
               color="white"
               direction="column"
-              padding={4}
+              padding={6}
               shadow="lg"
             >
               <Box
                 alignItems="center"
                 display="inline-flex"
-                fontSize="3xl"
+                fontSize="6xl"
                 fontWeight={500}
-                gap={2}
+                gap={4}
                 lineHeight="normal"
                 marginBottom={1}
                 textTransform="uppercase"
               >
                 {Boolean(selected.sender.badges?.length) && (
-                  <Box as="span" display="inline-flex" gap={1}>
+                  <Box as="span" display="inline-flex" gap={2}>
                     {selected.sender.badges?.map((badge) => (
-                      <Image key={badge} alt={badge} height={6} src={badge} width={6} />
+                      <Image key={badge} alt={badge} height={12} src={badge} width={12} />
                     ))}
                   </Box>
                 )}
@@ -78,8 +78,9 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
               <Text
                 dangerouslySetInnerHTML={{__html: selected.message}}
                 display="inline-block"
-                fontSize="2xl"
+                fontSize="2.5rem"
                 fontWeight={400}
+                lineHeight="140%"
                 sx={{
                   "& i": {
                     width: 6,
