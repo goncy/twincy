@@ -74,7 +74,8 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
   useEffect(() => {
     function handleMessage(event: EventMessage) {
       // Check if user used channel points
-      const isFeatured = event.tags["custom-reward-id"] === reward;
+      const isFeatured =
+        event.tags["custom-reward-id"] && event.tags["custom-reward-id"] === reward;
 
       // Return if not a valid type
       if (!(isFeatured || event.message.startsWith(`${command} `))) {
@@ -86,8 +87,10 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
         // Create a draft
         let draft = [...reviews];
 
-        // Remove repeated reviews
-        draft = draft.filter((review) => review.sender.name !== event.sender.name);
+        // Return if review is repeated
+        if (draft.some((review) => review.sender.name === event.sender.name)) {
+          return draft;
+        }
 
         // Add the new review
         draft = draft.concat({
@@ -97,7 +100,7 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
           url: event.message.replace(`${command} `, ""),
           sender: event.sender,
           color: event.color,
-          featured: isFeatured,
+          featured: Boolean(isFeatured),
           timestamp: +new Date(),
         });
 
