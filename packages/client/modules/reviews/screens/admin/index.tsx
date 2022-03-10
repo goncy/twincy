@@ -15,14 +15,9 @@ interface Props {
   socket: Socket;
 }
 
-const ICONS: Record<IReview["type"], string> = {
-  linkedin: "📄",
-  portfolio: "🌐",
-};
-
 const AdminScreen: NextPage<Props> = ({socket}) => {
   const {
-    query: {linkedinId, portfolioId, channel},
+    query: {command, reward, channel},
   } = useRouter();
   const [limit, setLimit] = useState<number>(100);
   const [reviews, setReviews] = useState<IReview[]>([]);
@@ -79,20 +74,10 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
   useEffect(() => {
     function handleMessage(event: EventMessage) {
       // Check if user used channel points
-      const isFeatured = [linkedinId, portfolioId].includes(event.tags["custom-reward-id"]);
-
-      // Get review type
-      const type =
-        (isFeatured && event.tags["custom-reward-id"] === linkedinId) ||
-        (!isFeatured && event.message.startsWith("!linkedin "))
-          ? "linkedin"
-          : (isFeatured && event.tags["custom-reward-id"] === portfolioId) ||
-            (!isFeatured && event.message.startsWith("!portfolio "))
-          ? "portfolio"
-          : null;
+      const isFeatured = event.tags["custom-reward-id"] === reward;
 
       // Return if not a valid type
-      if (!type) {
+      if (!(isFeatured || event.message.startsWith(`${command} `))) {
         return;
       }
 
@@ -102,18 +87,14 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
         let draft = [...reviews];
 
         // Remove repeated reviews
-        draft = draft.filter(
-          (review) => !(review.sender.name === event.sender.name && review.type === type),
-        );
+        draft = draft.filter((review) => review.sender.name !== event.sender.name);
 
         // Add the new review
         draft = draft.concat({
-          id: `${event.sender.name}-${type}`,
-          type,
+          id: event.sender.name,
           completed: false,
           selected: false,
-          url: event.message.replace(`!${type} `, ""),
-          icon: ICONS[type],
+          url: event.message.replace(`${command} `, ""),
           sender: event.sender,
           color: event.color,
           featured: isFeatured,
@@ -145,7 +126,7 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
     return () => {
       socket.off("message", handleMessage);
     };
-  }, [channel, linkedinId, portfolioId, socket]);
+  }, [channel, command, reward, socket]);
 
   useEffect(() => {
     socket.emit("reviews:replace", reviews);

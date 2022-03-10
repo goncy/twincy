@@ -12,7 +12,7 @@ interface Props {
 
 const ReviewScreen: NextPage<Props> = ({socket}) => {
   const {
-    query: {channel},
+    query: {channel, command},
   } = useRouter();
   const [reviews, setReviews] = useState<Review[]>([]);
 
@@ -65,7 +65,7 @@ const ReviewScreen: NextPage<Props> = ({socket}) => {
         >
           {reviews.map((review) => (
             <Text
-              key={`${review.sender.name}-${review.type}`}
+              key={review.sender.name}
               as="span"
               backgroundColor={review.selected ? "primary.500" : "transparent"}
               color={review.selected ? "white" : review.featured ? "secondary.600" : "primary.500"}
@@ -73,7 +73,7 @@ const ReviewScreen: NextPage<Props> = ({socket}) => {
               paddingY={1}
               textShadow="sm"
             >
-              {review.icon} {review.sender.name}
+              {review.sender.name}
             </Text>
           ))}
         </Stack>
@@ -81,11 +81,7 @@ const ReviewScreen: NextPage<Props> = ({socket}) => {
       <Text as="span">
         Sumá el tuyo con:{" "}
         <Text as="span" color="primary.500">
-          !linkedin
-        </Text>{" "}
-        <Text as="span" color="blackAlpha.600">{`<url>`}</Text> o{" "}
-        <Text as="span" color="primary.500">
-          !portfolio
+          {command}
         </Text>{" "}
         <Text as="span" color="blackAlpha.600">{`<url>`}</Text>
       </Text>

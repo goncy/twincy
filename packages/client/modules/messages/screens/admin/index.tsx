@@ -32,7 +32,7 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
   }, [buffer, isHighlights]);
 
   function handleToggleSelected(message: IMessage) {
-    socket.emit("select", selected === message.id ? null : message);
+    socket.emit("messages:select", selected === message.id ? null : message);
   }
 
   function handleToggleFavorite(id: IMessage["id"]) {

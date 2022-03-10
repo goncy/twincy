@@ -57,7 +57,6 @@ const Review: React.FC<Props> = ({review, onSelect, onCopy, onComplete, ...props
             textShadow="0 0 5px rgba(0,0,0,0.1)"
             textTransform="uppercase"
           />
-          <Text fontSize="xl">{review.icon}</Text>
           <Text color={review.selected ? "white" : "soft"} fontSize="xs">
             {new Date(Number(review.timestamp)).toLocaleTimeString()}
           </Text>

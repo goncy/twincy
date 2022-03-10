@@ -29,11 +29,11 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
     }
 
     // Set handler
-    socket.on("select", handleSelect);
+    socket.on("messages:select", handleSelect);
 
     return () => {
       // Remove handler
-      socket.off("select", handleSelect);
+      socket.off("messages:select", handleSelect);
     };
   }, [socket]);
 
