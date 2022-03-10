@@ -1,15 +1,15 @@
 import type {Socket} from "socket.io-client";
 import type {NextPage} from "next";
 import type {Review as IReview} from "../../types";
+import type {EventMessage} from "~/types";
 
 import {useEffect, useMemo, useState} from "react";
 import {Flex, Stack, StackDivider, Text, useToast} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 
-import type {EventMessage} from "~/types";
-import Navbar from "~/components/Navbar";
-
 import Review from "./components/Review";
+
+import Navbar from "~/components/Navbar";
 
 interface Props {
   socket: Socket;

@@ -1,16 +1,16 @@
 import type {Socket} from "socket.io-client";
 import type {NextPage} from "next";
 import type {Message as IMessage} from "./types";
+import type {EventMessage} from "~/types";
 
 import {useEffect, useMemo, useState} from "react";
 import {Flex, Stack, StackDivider, Text} from "@chakra-ui/react";
 import {ChatIcon, DeleteIcon, StarIcon} from "@chakra-ui/icons";
 
-import type {EventMessage} from "~/types";
-import Navbar from "~/components/Navbar";
-
 import {parseMessage} from "./utils";
 import Message from "./components/Message";
+
+import Navbar from "~/components/Navbar";
 
 interface Props {
   socket: Socket;
