@@ -6,6 +6,7 @@ import type {EventMessage} from "~/types";
 import {useEffect, useMemo, useState} from "react";
 import {Flex, Stack, StackDivider, Text, useToast} from "@chakra-ui/react";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 import Review from "./components/Review";
 
@@ -61,6 +62,10 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
         _review.id === review.id ? {...review, selected: !review.selected} : _review,
       ),
     );
+  }
+
+  function handleRemove(review: IReview) {
+    setReviews((reviews) => reviews.filter((_review) => _review.id !== review.id));
   }
 
   function handleToggleCompleted(review: IReview) {
@@ -136,81 +141,88 @@ const AdminScreen: NextPage<Props> = ({socket}) => {
   }, [socket, reviews]);
 
   return (
-    <Stack backgroundColor="background" height="100%" spacing={4}>
-      <Navbar />
-      <Stack
-        backgroundColor="background"
-        direction="row"
-        divider={<StackDivider />}
-        flex={1}
-        height="100%"
-        overflow="hidden"
-        paddingX={4}
-        spacing={4}
-      >
-        <Stack flex={1}>
-          <Text color="solid" fontWeight="500" textTransform="uppercase">
-            Queue
-          </Text>
-          <Stack flex={1} overflowY="auto" spacing={4}>
-            {pending.length ? (
-              <>
-                {pending.length > limit && (
-                  <Flex color="soft" justifyContent="center" padding={2}>
-                    <Text
-                      _hover={{textDecoration: "underline"}}
-                      cursor="pointer"
-                      fontWeight="500"
-                      onClick={() => setLimit((limit) => limit + 10)}
-                    >
-                      {reviews.length - limit} hidden messages
-                    </Text>
-                  </Flex>
-                )}
-                {pending.slice(-limit).map((review) => {
+    <>
+      <Head>
+        <title>Twincy - Reviews</title>
+      </Head>
+      <Stack backgroundColor="background" height="100%" spacing={4}>
+        <Navbar />
+        <Stack
+          backgroundColor="background"
+          direction="row"
+          divider={<StackDivider />}
+          flex={1}
+          height="100%"
+          overflow="hidden"
+          paddingX={4}
+          spacing={4}
+        >
+          <Stack flex={1}>
+            <Text color="solid" fontWeight="500" textTransform="uppercase">
+              Queue
+            </Text>
+            <Stack flex={1} overflowY="auto" spacing={4}>
+              {pending.length ? (
+                <>
+                  {pending.length > limit && (
+                    <Flex color="soft" justifyContent="center" padding={2}>
+                      <Text
+                        _hover={{textDecoration: "underline"}}
+                        cursor="pointer"
+                        fontWeight="500"
+                        onClick={() => setLimit((limit) => limit + 10)}
+                      >
+                        {reviews.length - limit} hidden messages
+                      </Text>
+                    </Flex>
+                  )}
+                  {pending.slice(-limit).map((review) => {
+                    return (
+                      <Review
+                        key={review.id}
+                        review={review}
+                        onComplete={() => handleToggleCompleted(review)}
+                        onCopy={() => handleCopyUrl(review)}
+                        onRemove={() => handleRemove(review)}
+                        onSelect={() => handleToggleSelected(review)}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <Text fontSize="xl" margin="auto" opacity={0.5}>
+                  No reviews found yet on the channel
+                </Text>
+              )}
+            </Stack>
+          </Stack>
+          <Stack flex={1}>
+            <Text color="solid" fontWeight="500" textTransform="uppercase">
+              Completed
+            </Text>
+            <Stack flex={1} overflowY="auto" spacing={4}>
+              {Boolean(completed.length) ? (
+                completed.map((review) => {
                   return (
                     <Review
                       key={review.id}
                       review={review}
                       onComplete={() => handleToggleCompleted(review)}
-                      onCopy={() => handleCopyUrl(review)}
+                      onRemove={() => handleRemove(review)}
                       onSelect={() => handleToggleSelected(review)}
                     />
                   );
-                })}
-              </>
-            ) : (
-              <Text fontSize="xl" margin="auto" opacity={0.5}>
-                No reviews found yet on the channel
-              </Text>
-            )}
-          </Stack>
-        </Stack>
-        <Stack flex={1}>
-          <Text color="solid" fontWeight="500" textTransform="uppercase">
-            Completed
-          </Text>
-          <Stack flex={1} overflowY="auto" spacing={4}>
-            {Boolean(completed.length) ? (
-              completed.map((review) => {
-                return (
-                  <Review
-                    key={review.id}
-                    review={review}
-                    onComplete={() => handleToggleCompleted(review)}
-                    onSelect={() => handleToggleSelected(review)}
-                  />
-                );
-              })
-            ) : (
-              <Text fontSize="xl" margin="auto" opacity={0.5}>
-                No completed reviews
-              </Text>
-            )}
+                })
+              ) : (
+                <Text fontSize="xl" margin="auto" opacity={0.5}>
+                  No completed reviews
+                </Text>
+              )}
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 };
 

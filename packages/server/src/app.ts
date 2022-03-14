@@ -4,7 +4,6 @@ import * as tmi from "tmi.js";
 import * as SocketIO from "socket.io";
 import * as express from "express";
 
-import {Message} from "./types";
 import {parseMessage} from "./utils/message";
 import {parseBadges} from "./utils/badges";
 
@@ -91,22 +90,28 @@ io.on("connection", async (socket) => {
   });
 });
 
-client.on("message", (_channel, tags, message) => {
+client.on("message", (_channel, tags, _message) => {
   // Sanitize channel
   const channel = _channel.replace("#", "").toLowerCase();
+
+  // Santize message
+  const message = parseMessage(_message, tags["emotes"]);
+
+  // Return if message is empty
+  if (!message) return;
 
   // On twitch message, send message to admin
   io.to(channel).emit("message", {
     id: tags["id"],
     color: tags.color,
-    channel: channel.replace("#", "").toLowerCase(),
+    channel,
     sender: {
       badges: parseBadges(tags["badges"]),
       name: tags.username,
     },
     tags,
     timestamp: Number(tags["tmi-sent-ts"]),
-    message: parseMessage(message, tags["emotes"]),
+    message,
   });
 });
 

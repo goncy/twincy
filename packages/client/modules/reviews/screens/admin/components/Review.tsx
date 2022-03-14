@@ -6,12 +6,13 @@ import {Stack, Image, Box, Flex, Text} from "@chakra-ui/react";
 
 interface Props extends Omit<StackProps, "onSelect" | "onCopy"> {
   onComplete?: (review: IReview) => void;
+  onRemove?: (review: IReview) => void;
   onSelect?: (review: IReview) => void;
   onCopy?: (review: IReview) => void;
   review: IReview;
 }
 
-const Review: React.FC<Props> = ({review, onSelect, onCopy, onComplete, ...props}) => {
+const Review: React.FC<Props> = ({review, onSelect, onCopy, onRemove, onComplete, ...props}) => {
   return (
     <Stack alignItems="flex-start" direction="row" spacing={3}>
       <Stack
@@ -25,8 +26,14 @@ const Review: React.FC<Props> = ({review, onSelect, onCopy, onComplete, ...props
         spacing={1}
         width="100%"
         wordBreak="break-word"
-        onClick={({ctrlKey, altKey}) =>
-          ctrlKey ? onComplete?.(review) : altKey ? onCopy?.(review) : onSelect?.(review)
+        onClick={({ctrlKey, altKey, shiftKey}) =>
+          ctrlKey
+            ? onComplete?.(review)
+            : altKey
+            ? onCopy?.(review)
+            : shiftKey
+            ? onRemove?.(review)
+            : onSelect?.(review)
         }
         {...props}
       >

@@ -28,5 +28,5 @@ export function parseMessage(message: string, emotes: tmi.ChatUserstate["emotes"
     );
   });
 
-  return text;
+  return text.trim();
 }
