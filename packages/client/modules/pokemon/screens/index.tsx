@@ -225,7 +225,7 @@ const PokemonScreen: NextPage<Props> = ({socket}) => {
     if (isShowing && isPlaying) {
       timeout = setTimeout(() => {
         togglePlaying(false);
-      }, 10000);
+      }, 30000);
     } else if (isShowing && !isPlaying) {
       hide = setTimeout(() => {
         toggleShowing(false);
