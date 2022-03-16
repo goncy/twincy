@@ -39,6 +39,7 @@ const App: React.VFC<AppProps> = ({Component, pageProps}) => {
     };
   }, [channel]);
 
+  // If not connected return null
   if (!isConnected) return null;
 
   return (
