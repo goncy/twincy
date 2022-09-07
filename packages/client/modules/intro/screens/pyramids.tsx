@@ -109,7 +109,7 @@ const Effects: React.VFC<EffectsProps> = ({options}) => {
   );
 };
 
-const IntroScreen: NextPage<Props> = ({
+const PyramidsScreen: NextPage<Props> = ({
   socket,
   options = {count: 100, depth: 30, acceleration: 0},
 }) => {
@@ -171,4 +171,4 @@ const IntroScreen: NextPage<Props> = ({
   );
 };
 
-export default IntroScreen;
+export default PyramidsScreen;

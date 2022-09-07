@@ -24,6 +24,7 @@
     }
   },
   "rules": {
+    "@next/next/no-img-element": "off",
     "no-console": "warn",
     "react/prop-types": "off",
     "react/jsx-uses-react": "off",

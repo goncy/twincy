@@ -20,7 +20,7 @@ interface Props {
   socket: Socket;
 }
 
-const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
+const HighlighterClientScreen: React.VFC<Props> = ({socket}) => {
   const [selected, setSelected] = useState<null | Message>(null);
 
   useEffect(() => {
@@ -101,4 +101,4 @@ const ShowcaseScreen: React.VFC<Props> = ({socket}) => {
   );
 };
 
-export default ShowcaseScreen;
+export default HighlighterClientScreen;

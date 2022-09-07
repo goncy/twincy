@@ -1,9 +1,8 @@
 import type {StackProps} from "@chakra-ui/react";
+import type {EventMessage} from "~/types";
 
 import {LockIcon, StarIcon} from "@chakra-ui/icons";
 import {Stack, Box, Flex, Image, Text} from "@chakra-ui/react";
-
-import type {EventMessage} from "~/types";
 
 interface Props extends Omit<StackProps, "onSelect"> {
   variant?: "featured" | "normal";

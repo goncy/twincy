@@ -1,6 +1,5 @@
-import {EventMessage} from "~/types";
-
-import {Message} from "./types";
+import type {Message} from "./types";
+import type {EventMessage} from "~/types";
 
 export function parseMessage(event: EventMessage): Message {
   // Store the draft message
