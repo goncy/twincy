@@ -39,7 +39,7 @@ interface EffectsProps {
   options: Options;
 }
 
-const Pyramid: React.VFC<PyramidProps> = ({z, options}) => {
+const Pyramid: React.FC<PyramidProps> = ({z, options}) => {
   const ref = useRef<Mesh>(null);
   const {viewport, camera} = useThree();
   const {width, height} = viewport.getCurrentViewport(camera, new THREE.Vector3(0, 0, z));
@@ -73,7 +73,7 @@ const Pyramid: React.VFC<PyramidProps> = ({z, options}) => {
   );
 };
 
-const Effects: React.VFC<EffectsProps> = ({options}) => {
+const Effects: React.FC<EffectsProps> = ({options}) => {
   // Investigate events types
   const noise = useRef<any>(null);
   const bloom = useRef<any>(null);
@@ -96,7 +96,7 @@ const Effects: React.VFC<EffectsProps> = ({options}) => {
         target={[0, 0, options.depth / 2]}
       />
       <Bloom ref={bloom} height={500} luminanceSmoothing={0.5} luminanceThreshold={0.2} />
-      <Noise ref={noise} opacity={0.05} />
+      <Noise ref={noise} opacity={0.02} />
       <Vignette darkness={1} eskil={false} offset={0.1} />
       <ToneMapping maxLuminance={5} middleGrey={1} />
       <ChromaticAberration
@@ -138,7 +138,7 @@ const PyramidsScreen: NextPage<Props> = ({
   return (
     <Flex
       alignItems="center"
-      backgroundColor="white"
+      backgroundColor="black"
       color="black"
       flexDirection="column"
       fontFamily="sans-serif"

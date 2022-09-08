@@ -50,7 +50,7 @@ const HighlighterClientScreen: React.VFC<Props> = ({socket}) => {
           >
             <Flex
               backgroundColor="primary.500"
-              borderRadius="sm"
+              borderRadius="lg"
               color="white"
               direction="column"
               padding={6}

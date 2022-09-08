@@ -43,10 +43,11 @@ const GradientScreen: FC = () => {
         animation={`${animation} 10s ease-in-out alternate infinite`}
         backgroundBlendMode="screen"
         backgroundRepeat="round"
-        bgGradient="radial(primary.500, black, primary.500, black)"
+        bgGradient="linear(90deg, red.500 0%, orange.500 26.88%, blue.500 48.46%, pink.500 74.51% )"
         borderRadius="3xl"
+        bottom={`-100px`}
         filter="blur(200px)"
-        h="80%"
+        h="200px"
         position="absolute"
         w="100%"
         zIndex={0}
@@ -62,7 +63,7 @@ const GradientScreen: FC = () => {
       >
         <Text
           bgClip="text"
-          bgGradient="linear(to-l, primary.300, primary.500)"
+          bgGradient="linear(to-r, primary.500, white)"
           fontSize="9rem"
           fontWeight="700"
         >
