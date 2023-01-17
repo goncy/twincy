@@ -6,7 +6,7 @@ export function parseMessage(event: EventMessage): Message {
   let text = event.message;
 
   // Check if the message is a question
-  const isQuestion = text.startsWith("!q ");
+  const isQuestion = text.startsWith("!q ") || text.includes("?");
 
   // Check if user bought a prize
   const isPrize = event.tags["msg-id"] === "highlighted-message";

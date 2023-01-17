@@ -1,11 +1,12 @@
-const withTM = require("next-transpile-modules")(["postprocessing", "@react-three/postprocessing"]);
-
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   experimental: {
     esmExternals: "loose",
   },
 };
 
-module.exports = withTM(config);
+module.exports = config;

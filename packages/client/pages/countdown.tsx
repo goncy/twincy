@@ -12,12 +12,7 @@ interface Props {
 const CountdownPage: NextPage<Props> = () => {
   const {query} = useRouter();
 
-  return (
-    <CountdownScreen
-      text={(query.text as string) || "Arrancamos en"}
-      timer={Number(query.timer || 600)}
-    />
-  );
+  return <CountdownScreen text={query.text as string} timer={Number(query.timer || 600)} />;
 };
 
 export default CountdownPage;

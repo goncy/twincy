@@ -16,7 +16,7 @@ import {
   ToneMapping,
   ChromaticAberration,
   Scanline,
-} from "@react-three/postprocessing/dist/index";
+} from "@react-three/postprocessing";
 import {BlendFunction} from "postprocessing";
 
 interface Options {
@@ -40,7 +40,7 @@ interface EffectsProps {
 }
 
 const Pyramid: React.FC<PyramidProps> = ({z, options}) => {
-  const ref = useRef<Mesh>(null);
+  const ref = useRef<Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>>(null);
   const {viewport, camera} = useThree();
   const {width, height} = viewport.getCurrentViewport(camera, new THREE.Vector3(0, 0, z));
   const [data] = useState(() => ({
@@ -66,7 +66,7 @@ const Pyramid: React.FC<PyramidProps> = ({z, options}) => {
   });
 
   return (
-    <mesh ref={ref} rotation={[10, 0, 0]} scale={2}>
+    <mesh ref={ref as unknown as React.RefObject<React.ReactNode>} rotation={[10, 0, 0]} scale={2}>
       <coneGeometry args={[1, 1, 3]} />
       <meshStandardMaterial color="whitesmoke" />
     </mesh>

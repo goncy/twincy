@@ -2,6 +2,8 @@ import type {NextRequest} from "next/server";
 
 import {NextResponse} from "next/server";
 
+export const matchers = ["/api/twitch"];
+
 export default async function handler(req: NextRequest) {
   let response = NextResponse.next();
 
