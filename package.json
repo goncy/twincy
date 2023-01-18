@@ -5,6 +5,7 @@
   "type": "module",
   "author": "Goncy",
   "scripts": {
+    "build": "turbo build",
     "start": "turbo build start",
     "dev": "turbo dev"
   },

@@ -2,12 +2,17 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "dev": {
+      "persistent": true,
       "cache": false
     },
     "build": {
       "outputs": [".next/**", "dist/**"],
       "inputs": ["src/**/*.tsx", "src/**/*.ts"]
     },
-    "start": {}
+    "start": {
+      "persistent": true,
+      "dependsOn": ["build"],
+      "inputs": [".next/BUILD_ID", "dist/app.js"]
+    }
   }
 }
