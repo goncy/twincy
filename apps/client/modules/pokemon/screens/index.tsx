@@ -246,7 +246,7 @@ const PokemonScreen: NextPage<Props> = ({socket}) => {
       backgroundColor="white"
       color="black"
       flexDirection="column"
-      fontFamily="'Press Start 2P'"
+      fontFamily="pressStart"
       height="100vh"
       justifyContent="center"
       width="100vw"

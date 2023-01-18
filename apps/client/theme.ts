@@ -27,6 +27,8 @@ export default extendTheme({
     body: "Roboto, sans-serif",
     heading: "Roboto, sans-serif",
     mono: "Menlo, monospace",
+    inter: "var(--font-inter), 'Inter', sans-serif",
+    pressStart: "var(--font-press-start), 'Press Start 2P', cursive",
   },
   styles: {
     global: {
