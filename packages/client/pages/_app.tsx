@@ -26,18 +26,17 @@ const App: React.FC<AppProps> = ({Component, pageProps}) => {
       query: {channel},
     });
 
-    // Connect to the server
-    socket.connect();
-
     // Add connection handler
     socket.on("connect", handleConnect);
+
+    // Connect to the server
+    socket.connect();
 
     return () => {
       // Remove connection handler
       socket.off("connect", handleConnect);
 
-      // Reset handshake query and disconnect from server
-      socket.io.opts.query = {};
+      // Disconnect from server
       socket.disconnect();
 
       // Reset socket

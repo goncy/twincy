@@ -5,6 +5,7 @@ specifiers:
   '@chakra-ui/react': ^2.4.9
   '@emotion/react': ^11.10.5
   '@emotion/styled': ^11.10.5
+  '@next/font': ^13.1.2
   '@react-three/drei': ^9.53.0
   '@react-three/fiber': ^8.10.0
   '@react-three/postprocessing': ^2.7.0
@@ -39,6 +40,7 @@ dependencies:
   '@chakra-ui/react': 2.4.9_6n4ajw66asux7v73zsjaboysia
   '@emotion/react': 11.10.5_jp5qgyg6plq757v5hojp7ls2oe
   '@emotion/styled': 11.10.5_jp5djshq6aqfasno3mth3hguci
+  '@next/font': 13.1.2
   '@react-three/drei': 9.53.0_ujgrnjqg6qzyiwznfocw5cghpm
   '@react-three/fiber': 8.10.0_4tzez3c2xpzuefjrvhpyy55bva
   '@react-three/postprocessing': 2.7.0_gomtgsyi2ezk55nxt2bgusgpbu
@@ -1777,6 +1779,10 @@ packages:
     dependencies:
       glob: 7.1.7
     dev: true
+
+  /@next/font/13.1.2:
+    resolution: {integrity: sha512-NXGXGFGiOKEnvBIHq9cdFTKbHO2/4B3Zd9K27M7j1DioIQVar7oVRqZMYs0h3XMVEZLwjjkdAtqRPCzzd3RtXg==}
+    dev: false
 
   /@next/swc-android-arm-eabi/13.1.2:
     resolution: {integrity: sha512-7mRz1owoGsbfIcdOJA3kk7KEwPZ+OvVT1z9DkR/yru4QdVLF69h/1SHy0vlUNQMxDRllabhxCfkoZCB34GOGAg==}
