@@ -17,7 +17,7 @@ interface Props {
   socket: Socket;
 }
 
-const HighlighterAdminScreen: NextPage<Props> = ({socket}) => {
+const TickerAdminScreen: NextPage<Props> = ({socket}) => {
   const [limit, setLimit] = useState<number>(100);
   const [buffer, setBuffer] = useState<IMessage[]>([]);
   const [selected, setSelected] = useState<null | IMessage["id"]>(null);
@@ -200,4 +200,4 @@ const HighlighterAdminScreen: NextPage<Props> = ({socket}) => {
   );
 };
 
-export default HighlighterAdminScreen;
+export default TickerAdminScreen;

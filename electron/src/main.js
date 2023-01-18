@@ -31,11 +31,11 @@ function createWindow () {
 
   // Load the splash
   splash.loadFile(path.join(__dirname, '/splash.html'));
-  main.loadURL('http://localhost:6601/highlighter/admin');
+  main.loadURL('http://localhost:6601/ticker/admin');
 
   // If server is not ready, try again
   main.webContents.on('did-fail-load', () => {
-    main.loadURL('http://localhost:6601/highlighter/admin');
+    main.loadURL('http://localhost:6601/ticker/admin');
   });
 
   // Remove splash when app is ready

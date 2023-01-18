@@ -20,7 +20,7 @@ interface Props {
   socket: Socket;
 }
 
-const HighlighterClientScreen: React.VFC<Props> = ({socket}) => {
+const TickerClientScreen: React.VFC<Props> = ({socket}) => {
   const [selected, setSelected] = useState<null | Message>(null);
 
   useEffect(() => {
@@ -101,4 +101,4 @@ const HighlighterClientScreen: React.VFC<Props> = ({socket}) => {
   );
 };
 
-export default HighlighterClientScreen;
+export default TickerClientScreen;
