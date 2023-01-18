@@ -5,15 +5,10 @@
   "type": "module",
   "author": "Goncy",
   "scripts": {
-    "kill": "kill-port --port 6600,6601",
-    "build": "lerna run build --parallel --stream",
-    "prestart": "npm install && lerna bootstrap",
-    "start": "lerna run start --parallel --stream",
-    "predev": "npm run kill",
-    "dev": "lerna run dev --parallel --stream"
+    "start": "turbo build start",
+    "dev": "turbo dev"
   },
   "devDependencies": {
-    "kill-port": "^1.6.1",
-    "lerna": "^4.0.0"
+    "turbo": "^1.7.0"
   }
 }

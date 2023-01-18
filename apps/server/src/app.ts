@@ -2,7 +2,7 @@ import * as http from "http";
 
 import * as tmi from "tmi.js";
 import * as SocketIO from "socket.io";
-import * as express from "express";
+import express from "express";
 
 import {parseMessage} from "./utils/message";
 import {parseBadges} from "./utils/badges";
