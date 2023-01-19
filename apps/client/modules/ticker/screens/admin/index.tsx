@@ -1,5 +1,5 @@
-import type {Socket} from "socket.io-client";
-import type {NextPage} from "next";
+"use client";
+
 import type {Message as IMessage} from "./types";
 import type {EventMessage} from "~/types";
 
@@ -12,12 +12,10 @@ import {parseMessage} from "./utils";
 import Message from "./components/Message";
 
 import Navbar from "~/components/Navbar";
+import {useSocket} from "@/socket/context";
 
-interface Props {
-  socket: Socket;
-}
-
-const TickerAdminScreen: NextPage<Props> = ({socket}) => {
+const TickerAdminScreen = () => {
+  const socket = useSocket();
   const [limit, setLimit] = useState<number>(100);
   const [buffer, setBuffer] = useState<IMessage[]>([]);
   const [selected, setSelected] = useState<null | IMessage["id"]>(null);

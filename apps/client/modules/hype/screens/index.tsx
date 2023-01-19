@@ -1,21 +1,14 @@
-import type {NextPage} from "next";
-import type {Socket} from "socket.io-client";
+"use client";
 
 import Confetti from "react-confetti";
 import {useEffect, useRef, useState} from "react";
 import {Flex, Text} from "@chakra-ui/react";
-import {useRouter} from "next/router";
 
 import {EventMessage} from "~/types";
+import {useSocket} from "@/socket/context";
 
-interface Props {
-  socket: Socket;
-}
-
-const HypeScreen: NextPage<Props> = ({socket}) => {
-  const {
-    query: {id},
-  } = useRouter();
+const HypeScreen = () => {
+  const socket = useSocket();
   const [isPlaying, togglePlaying] = useState<boolean>(false);
   const [isShowing, toggleShowing] = useState<boolean>(false);
   const [count, setCount] = useState(1);
@@ -23,12 +16,7 @@ const HypeScreen: NextPage<Props> = ({socket}) => {
 
   useEffect(() => {
     function handleMesage(event: EventMessage) {
-      if (
-        !isShowing &&
-        !isPlaying &&
-        event.tags["custom-reward-id"] === id &&
-        event.message.toLowerCase().includes("hype")
-      ) {
+      if (!isShowing && !isPlaying && event.message.toLowerCase().includes("hype")) {
         timeouts.current = [];
         setCount(1);
         toggleShowing(true);
@@ -45,7 +33,7 @@ const HypeScreen: NextPage<Props> = ({socket}) => {
     return () => {
       socket.off("message", handleMesage);
     };
-  }, [socket, isShowing, isPlaying, id]);
+  }, [socket, isShowing, isPlaying]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;

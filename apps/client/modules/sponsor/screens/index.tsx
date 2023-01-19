@@ -1,3 +1,5 @@
+"use client";
+
 import {SimpleGrid, Stack, StackProps, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {useEffect, useState} from "react";
@@ -6,7 +8,7 @@ import leniolabs from "../logos/leniolabs.png";
 
 type Props = {duration: number; loop: number};
 
-const Banner: React.FC<StackProps> = (props) => {
+const Banner: React.FC<StackProps> = ({opacity}) => {
   return (
     <Stack
       backgroundColor="gray.700"
@@ -15,10 +17,11 @@ const Banner: React.FC<StackProps> = (props) => {
       fontSize="xl"
       height={290}
       lineHeight="1.1"
+      opacity={opacity}
       padding={4}
       spacing={4}
       textAlign="center"
-      {...props}
+      transition="opacity 2s"
     >
       <Text fontWeight="bold" textTransform="uppercase">
         Este stream es auspiciado por

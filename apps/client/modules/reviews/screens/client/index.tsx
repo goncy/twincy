@@ -1,19 +1,18 @@
-import type {NextPage} from "next";
-import type {Socket} from "socket.io-client";
+"use client";
+
 import type {Review} from "../../types";
 
 import {useEffect, useState} from "react";
 import {Stack, StackDivider, Text} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 
-interface Props {
-  socket: Socket;
-}
+import {useSocket} from "@/socket/context";
 
-const ReviewScreen: NextPage<Props> = ({socket}) => {
+const ReviewClientScreen = () => {
   const {
-    query: {channel, command},
+    query: {command},
   } = useRouter();
+  const socket = useSocket();
   const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const ReviewScreen: NextPage<Props> = ({socket}) => {
       // Remove listener when unmounting
       socket.off("reviews:replace", handleReplace);
     };
-  }, [socket, channel]);
+  }, [socket]);
 
   // Hide if no reviews
   if (!reviews.length) return null;
@@ -96,4 +95,4 @@ const ReviewScreen: NextPage<Props> = ({socket}) => {
   );
 };
 
-export default ReviewScreen;
+export default ReviewClientScreen;

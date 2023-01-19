@@ -1,8 +1,10 @@
-import type {Socket} from "socket.io-client";
+"use client";
 
 import {useState, useEffect} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 import {Box, Flex, Image, Text} from "@chakra-ui/react";
+
+import {useSocket} from "@/socket/context";
 
 interface Message {
   id: string;
@@ -16,11 +18,8 @@ interface Message {
   isHighlighted: boolean;
 }
 
-interface Props {
-  socket: Socket;
-}
-
-const TickerClientScreen: React.VFC<Props> = ({socket}) => {
+const TickerClientScreen = () => {
+  const socket = useSocket();
   const [selected, setSelected] = useState<null | Message>(null);
 
   useEffect(() => {

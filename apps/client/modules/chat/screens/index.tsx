@@ -1,17 +1,16 @@
-import type {Socket} from "socket.io-client";
+"use client";
+
+import type {EventMessage} from "~/types";
 
 import {FC} from "react";
 import {useEffect, useState} from "react";
 import {Box, Image, Stack, Text} from "@chakra-ui/react";
 import {AnimatePresence, motion} from "framer-motion";
 
-import {EventMessage} from "~/types";
+import {useSocket} from "@/socket/context";
 
-type Props = {
-  socket: Socket;
-};
-
-const ChatIndexScreen: FC<Props> = ({socket}) => {
+const ChatIndexScreen: FC = () => {
+  const socket = useSocket();
   const [messages, setMessages] = useState<EventMessage[]>([]);
 
   useEffect(() => {

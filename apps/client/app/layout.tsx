@@ -1,6 +1,6 @@
 import {Inter, Press_Start_2P} from "@next/font/google";
 
-import Providers from "./providers";
+import ThemeProvider from "@/theme/provider";
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export default function RootLayout({children}: Props) {
     <html>
       <head />
       <body className={`${inter.variable} ${pressStart2P.variable}`}>
-        <Providers>{children}</Providers>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

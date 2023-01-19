@@ -1,5 +1,6 @@
+"use client";
+
 import type {NextPage} from "next";
-import type {Socket} from "socket.io-client";
 import type {Mesh} from "three";
 
 import {Suspense, useEffect, useRef, useState} from "react";
@@ -19,6 +20,8 @@ import {
 } from "@react-three/postprocessing";
 import {BlendFunction} from "postprocessing";
 
+import {useSocket} from "~/modules/socket/context";
+
 interface Options {
   count: number;
   depth: number;
@@ -26,7 +29,6 @@ interface Options {
 }
 
 interface Props {
-  socket: Socket;
   options?: Options;
 }
 
@@ -66,7 +68,7 @@ const Pyramid: React.FC<PyramidProps> = ({z, options}) => {
   });
 
   return (
-    <mesh ref={ref as unknown as React.RefObject<React.ReactNode>} rotation={[10, 0, 0]} scale={2}>
+    <mesh ref={ref} rotation={[10, 0, 0]} scale={2}>
       <coneGeometry args={[1, 1, 3]} />
       <meshStandardMaterial color="whitesmoke" />
     </mesh>
@@ -109,10 +111,8 @@ const Effects: React.FC<EffectsProps> = ({options}) => {
   );
 };
 
-const PyramidsScreen: NextPage<Props> = ({
-  socket,
-  options = {count: 100, depth: 30, acceleration: 0},
-}) => {
+const PyramidsScreen: NextPage<Props> = ({options = {count: 100, depth: 30, acceleration: 0}}) => {
+  const socket = useSocket();
   const timeouts = useRef<Set<NodeJS.Timeout>>(new Set<NodeJS.Timeout>());
 
   useEffect(() => {

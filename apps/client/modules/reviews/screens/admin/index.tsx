@@ -1,5 +1,5 @@
-import type {Socket} from "socket.io-client";
-import type {NextPage} from "next";
+"use client";
+
 import type {Review as IReview} from "../../types";
 import type {EventMessage} from "~/types";
 
@@ -11,15 +11,13 @@ import Head from "next/head";
 import Review from "./components/Review";
 
 import Navbar from "~/components/Navbar";
+import {useSocket} from "@/socket/context";
 
-interface Props {
-  socket: Socket;
-}
-
-const AdminScreen: NextPage<Props> = ({socket}) => {
+const AdminScreen = () => {
   const {
     query: {command, reward, channel},
   } = useRouter();
+  const socket = useSocket();
   const [limit, setLimit] = useState<number>(100);
   const [reviews, setReviews] = useState<IReview[]>([]);
   const {pending, completed} = useMemo<{pending: IReview[]; completed: IReview[]}>(
