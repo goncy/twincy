@@ -52,10 +52,10 @@ io.on("connection", async (socket) => {
 
   socket.on("disconnect", async () => {
     // Get sockets connected to the channel
-    const sockets = await io.in(channel).allSockets();
+    const sockets = await io.in(channel).fetchSockets();
 
     // If no sockets are connected, part from channel
-    if (sockets.size === 0 && client.getChannels().includes(`#${channel}`)) {
+    if (sockets.length === 0 && client.getChannels().includes(`#${channel}`)) {
       try {
         // Part channel
         await client.part(`#${channel}`);
