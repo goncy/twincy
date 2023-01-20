@@ -5,7 +5,6 @@ import type {EventMessage} from "~/types";
 
 import {useEffect, useMemo, useState} from "react";
 import {Flex, Stack, StackDivider, Text, useToast} from "@chakra-ui/react";
-import {useRouter} from "next/router";
 import Head from "next/head";
 
 import Review from "./components/Review";
@@ -13,10 +12,11 @@ import Review from "./components/Review";
 import Navbar from "~/components/Navbar";
 import {useSocket} from "@/socket/context";
 
-const AdminScreen = () => {
-  const {
-    query: {command, reward, channel},
-  } = useRouter();
+interface Props {
+  command: string;
+}
+
+const ReviewAdminScreen = ({command}: Props) => {
   const socket = useSocket();
   const [limit, setLimit] = useState<number>(100);
   const [reviews, setReviews] = useState<IReview[]>([]);
@@ -76,12 +76,8 @@ const AdminScreen = () => {
 
   useEffect(() => {
     function handleMessage(event: EventMessage) {
-      // Check if user used channel points
-      const isFeatured =
-        event.tags["custom-reward-id"] && event.tags["custom-reward-id"] === reward;
-
       // Return if not a valid type
-      if (!(isFeatured || event.message.startsWith(`${command} `))) {
+      if (!event.message.startsWith(`${command} `)) {
         return;
       }
 
@@ -103,25 +99,11 @@ const AdminScreen = () => {
           url: event.message.replace(`${command} `, ""),
           sender: event.sender,
           color: event.color,
-          featured: Boolean(isFeatured),
           timestamp: +new Date(),
         });
 
         // Sort reviews
-        draft.sort((a, b) => {
-          // Featured should go first
-          if (b.featured && !a.featured) {
-            return 1;
-          }
-
-          // Featured should go first
-          if (a.featured && !b.featured) {
-            return -1;
-          }
-
-          // Sort by timestamp
-          return a.timestamp - b.timestamp;
-        });
+        draft.sort((a, b) => a.timestamp - b.timestamp);
 
         return draft;
       });
@@ -132,7 +114,7 @@ const AdminScreen = () => {
     return () => {
       socket.off("message", handleMessage);
     };
-  }, [channel, command, reward, socket]);
+  }, [command, socket]);
 
   useEffect(() => {
     socket.emit("reviews:replace", reviews);
@@ -224,4 +206,4 @@ const AdminScreen = () => {
   );
 };
 
-export default AdminScreen;
+export default ReviewAdminScreen;

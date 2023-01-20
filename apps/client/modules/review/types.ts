@@ -5,7 +5,6 @@ export interface Review {
     name: string;
   };
   color: string;
-  featured: boolean;
   timestamp: number;
   completed: boolean;
   selected: boolean;

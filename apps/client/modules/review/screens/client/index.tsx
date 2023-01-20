@@ -4,14 +4,14 @@ import type {Review} from "../../types";
 
 import {useEffect, useState} from "react";
 import {Stack, StackDivider, Text} from "@chakra-ui/react";
-import {useRouter} from "next/router";
 
 import {useSocket} from "@/socket/context";
 
-const ReviewClientScreen = () => {
-  const {
-    query: {command},
-  } = useRouter();
+interface Props {
+  command: string;
+}
+
+const ReviewClientScreen = ({command}: Props) => {
   const socket = useSocket();
   const [reviews, setReviews] = useState<Review[]>([]);
 
@@ -69,7 +69,7 @@ const ReviewClientScreen = () => {
             key={review.sender.name}
             as="span"
             backgroundColor={review.selected ? "primary.500" : "transparent"}
-            color={review.selected ? "white" : review.featured ? "secondary.600" : "primary.500"}
+            color={review.selected ? "white" : "primary.500"}
             paddingX={2}
             paddingY={1}
             textShadow="sm"
