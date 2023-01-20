@@ -29,6 +29,12 @@ module.exports = {
         endOfLine: "auto",
       },
     ],
-    "import/order": ["warn", {"newlines-between": "always"}],
+    "import/order": [
+      "warn",
+      {
+        groups: ["type", "builtin", "object", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+      },
+    ],
   },
 };

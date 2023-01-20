@@ -1,6 +1,6 @@
 "use client";
 
-import type {EventMessage} from "~/types";
+import type {Message} from "@twincy/types";
 
 import {FC} from "react";
 import {useEffect, useState} from "react";
@@ -11,10 +11,10 @@ import {useSocket} from "@/socket/context";
 
 const ChatIndexScreen: FC = () => {
   const socket = useSocket();
-  const [messages, setMessages] = useState<EventMessage[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    function handleMesage(event: EventMessage) {
+    function handleMesage(event: Message) {
       setMessages((messages) => [event, ...messages].slice(0, 20));
     }
 

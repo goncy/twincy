@@ -1,7 +1,6 @@
 "use client";
 
-import type {Message as IMessage} from "./types";
-import type {EventMessage} from "~/types";
+import type {Message as IMessage} from "@twincy/types";
 
 import {useEffect, useMemo, useState} from "react";
 import {Flex, Stack, StackDivider, Text} from "@chakra-ui/react";
@@ -21,14 +20,14 @@ const TickerAdminScreen = () => {
   const [selected, setSelected] = useState<null | IMessage["id"]>(null);
   const [bookmark, setBookmark] = useState<null | IMessage["id"]>(null);
   const [favorites, setFavorites] = useState<IMessage["id"][]>([]);
-  const [isHighlights, toggleHighlights] = useState<boolean>(false);
+  const [onlyHighlighted, toggleOnlyHighlighted] = useState<boolean>(false);
   const messages = useMemo(() => {
-    if (isHighlights) {
+    if (onlyHighlighted) {
       return buffer.filter((message) => message.isHighlighted);
     }
 
     return buffer;
-  }, [buffer, isHighlights]);
+  }, [buffer, onlyHighlighted]);
 
   function handleToggleSelected(message: IMessage) {
     socket.emit("messages:select", selected === message.id ? null : message);
@@ -52,11 +51,11 @@ const TickerAdminScreen = () => {
   }
 
   useEffect(() => {
-    function handleSelect(message: EventMessage) {
+    function handleSelect(message: IMessage) {
       setSelected(message?.id);
     }
 
-    function handleMessage(event: EventMessage) {
+    function handleMessage(event: IMessage) {
       setBuffer((messages) => messages.concat(parseMessage(event)));
     }
 
@@ -78,11 +77,11 @@ const TickerAdminScreen = () => {
         <Navbar>
           <Stack alignItems="center" direction="row" spacing={4}>
             <StarIcon
-              color={isHighlights ? "secondary.500" : "white"}
+              color={onlyHighlighted ? "secondary.500" : "white"}
               cursor="pointer"
               height={5}
               width={5}
-              onClick={() => toggleHighlights((isHighlights) => !isHighlights)}
+              onClick={() => toggleOnlyHighlighted((isHighlights) => !isHighlights)}
             />
             <DeleteIcon color="white" cursor="pointer" height={5} width={5} onClick={handleClear} />
           </Stack>

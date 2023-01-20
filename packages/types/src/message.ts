@@ -1,4 +1,4 @@
-export interface EventMessage {
+export interface Message {
   id: string;
   color: string;
   channel: string;
@@ -13,4 +13,5 @@ export interface EventMessage {
   };
   timestamp: number;
   message: string;
+  isHighlighted: boolean;
 }

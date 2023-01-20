@@ -1,3 +1,5 @@
+import type {Message, Review} from "@twincy/types";
+
 import * as http from "http";
 
 import * as tmi from "tmi.js";
@@ -70,7 +72,7 @@ io.on("connection", async (socket) => {
   // // MESSAGES
 
   // Listen for changes on the selected message
-  socket.on("messages:select", async (message: unknown) => {
+  socket.on("messages:select", async (message: Message) => {
     // Only to self
     io.to(channel).emit("messages:select", message);
   });
@@ -78,13 +80,13 @@ io.on("connection", async (socket) => {
   // // REVIEW
 
   // Listen for changes on a single review
-  socket.on("review:update", async (review: unknown) => {
+  socket.on("review:update", async (review: Review) => {
     // Only to self
     io.to(channel).emit("review:update", review);
   });
 
   // Listen for changes on all review
-  socket.on("review:replace", async (reviews: unknown) => {
+  socket.on("review:replace", async (reviews: Review[]) => {
     // Only to self
     io.to(channel).emit("review:replace", reviews);
   });

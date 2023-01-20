@@ -1,5 +1,5 @@
 import type {StackProps} from "@chakra-ui/react";
-import type {Review as IReview} from "../../../types";
+import type {Review as IReview} from "@twincy/types";
 
 import {StarIcon} from "@chakra-ui/icons";
 import {Stack, Image, Box, Flex, Text} from "@chakra-ui/react";

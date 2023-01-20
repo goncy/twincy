@@ -1,7 +1,6 @@
-import type {Message} from "./types";
-import type {EventMessage} from "~/types";
+import type {Message} from "@twincy/types";
 
-export function parseMessage(event: EventMessage): Message {
+export function parseMessage(event: Message): Message {
   // Store the draft message
   let text = event.message;
 

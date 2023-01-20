@@ -1,7 +1,6 @@
 "use client";
 
-import type {Review as IReview} from "../../types";
-import type {EventMessage} from "~/types";
+import type {Review as IReview, Message} from "@twincy/types";
 
 import {useEffect, useMemo, useState} from "react";
 import {Flex, Stack, StackDivider, Text, useToast} from "@chakra-ui/react";
@@ -75,7 +74,7 @@ const ReviewAdminScreen = ({command}: Props) => {
   }
 
   useEffect(() => {
-    function handleMessage(event: EventMessage) {
+    function handleMessage(event: Message) {
       // Return if not a valid type
       if (!event.message.startsWith(`${command} `)) {
         return;

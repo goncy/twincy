@@ -1,22 +1,12 @@
 "use client";
 
+import type {Message} from "@twincy/types";
+
 import {useState, useEffect} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 import {Box, Flex, Image, Text} from "@chakra-ui/react";
 
 import {useSocket} from "@/socket/context";
-
-interface Message {
-  id: string;
-  sender: {
-    badges: string[];
-    name: string;
-  };
-  timestamp: number;
-  message: string;
-  color: string;
-  isHighlighted: boolean;
-}
 
 const TickerClientScreen = () => {
   const socket = useSocket();

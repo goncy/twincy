@@ -1,18 +1,18 @@
 import type {StackProps} from "@chakra-ui/react";
-import type {EventMessage} from "~/types";
+import type {Message} from "@twincy/types";
 
 import {LockIcon, StarIcon} from "@chakra-ui/icons";
 import {Stack, Box, Flex, Image, Text} from "@chakra-ui/react";
 
 interface Props extends Omit<StackProps, "onSelect"> {
   variant?: "featured" | "normal";
-  onFavorite?: (id: EventMessage["id"]) => void;
-  onSelect?: (message: EventMessage) => void;
-  onBookmark?: (id: EventMessage["id"]) => void;
+  onFavorite?: (id: Message["id"]) => void;
+  onSelect?: (message: Message) => void;
+  onBookmark?: (id: Message["id"]) => void;
   sender: string;
   badges?: string[];
   timestamp: number;
-  message: EventMessage;
+  message: Message;
   isHighlighted?: boolean;
   isFavorite?: boolean;
   isSelected?: boolean;

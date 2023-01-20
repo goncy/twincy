@@ -1,10 +1,11 @@
 "use client";
 
+import type {Message} from "@twincy/types";
+
 import Confetti from "react-confetti";
 import {useEffect, useRef, useState} from "react";
 import {Flex, Text} from "@chakra-ui/react";
 
-import {EventMessage} from "~/types";
 import {useSocket} from "@/socket/context";
 
 const HypeScreen = () => {
@@ -15,7 +16,7 @@ const HypeScreen = () => {
   const timeouts = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
-    function handleMesage(event: EventMessage) {
+    function handleMesage(event: Message) {
       if (!isShowing && !isPlaying && event.message.toLowerCase().includes("hype")) {
         timeouts.current = [];
         setCount(1);

@@ -1,6 +1,6 @@
 "use client";
 
-import type {Review} from "../../types";
+import type {Review} from "@twincy/types";
 
 import {useEffect, useState} from "react";
 import {Stack, StackDivider, Text} from "@chakra-ui/react";

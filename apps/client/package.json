@@ -27,6 +27,7 @@
     "three": "^0.148.0"
   },
   "devDependencies": {
+    "@twincy/types": "workspace:^1.0.0",
     "@types/node": "^18.11.18",
     "@types/react": "18.0.26",
     "@types/three": "^0.148.0",

@@ -1,9 +1,10 @@
 "use client";
 
+import type {Message} from "@twincy/types";
+
 import {useEffect, useState} from "react";
 import {Flex, Image, Text} from "@chakra-ui/react";
 
-import {EventMessage} from "~/types";
 import {useSocket} from "~/modules/socket/context";
 
 interface Pokemon {
@@ -185,7 +186,7 @@ const PokemonScreen = () => {
   const [isShowing, toggleShowing] = useState<boolean>(false);
 
   useEffect(() => {
-    function handleMesage(event: EventMessage) {
+    function handleMesage(event: Message) {
       if (!isShowing && !isPlaying && event.message.toLowerCase().includes("pokemon")) {
         setPokemon(getRandomPokemon());
         togglePlaying(true);
