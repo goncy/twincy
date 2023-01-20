@@ -117,7 +117,7 @@ const ReviewAdminScreen = ({command}: Props) => {
   }, [command, socket]);
 
   useEffect(() => {
-    socket.emit("reviews:replace", reviews);
+    socket.emit("review:replace", reviews);
   }, [socket, reviews]);
 
   return (

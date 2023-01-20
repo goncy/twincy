@@ -1,7 +1,7 @@
 import {Provider as SocketProvider} from "@/socket/context";
 import PyramidsScreen from "@/intro/screens/pyramids";
 
-const IntroPage = () => {
+const IntroPyramidsPage = () => {
   return (
     <SocketProvider>
       <PyramidsScreen />
@@ -9,4 +9,4 @@ const IntroPage = () => {
   );
 };
 
-export default IntroPage;
+export default IntroPyramidsPage;

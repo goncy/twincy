@@ -78,15 +78,15 @@ io.on("connection", async (socket) => {
   // // REVIEW
 
   // Listen for changes on a single review
-  socket.on("reviews:update", async (review: unknown) => {
+  socket.on("review:update", async (review: unknown) => {
     // Only to self
-    io.to(channel).emit("reviews:update", review);
+    io.to(channel).emit("review:update", review);
   });
 
-  // Listen for changes on all reviews
-  socket.on("reviews:replace", async (reviews: unknown) => {
+  // Listen for changes on all review
+  socket.on("review:replace", async (reviews: unknown) => {
     // Only to self
-    io.to(channel).emit("reviews:replace", reviews);
+    io.to(channel).emit("review:replace", reviews);
   });
 });
 

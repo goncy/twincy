@@ -22,11 +22,11 @@ const ReviewClientScreen = ({command}: Props) => {
     }
 
     // Listen for messages
-    socket.on("reviews:replace", handleReplace);
+    socket.on("review:replace", handleReplace);
 
     return () => {
       // Remove listener when unmounting
-      socket.off("reviews:replace", handleReplace);
+      socket.off("review:replace", handleReplace);
     };
   }, [socket]);
 

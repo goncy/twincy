@@ -1,7 +1,7 @@
 "use client";
 
-import {FC, useEffect, useState} from "react";
-import {Box, Stack, Text, keyframes} from "@chakra-ui/react";
+import {FC} from "react";
+import {Box, Stack, keyframes} from "@chakra-ui/react";
 
 const animation = keyframes`
 from {
@@ -14,29 +14,6 @@ to {
   opacity: 0.4;
 }
 `;
-
-type TimerProps = {
-  seconds: number;
-};
-
-const Timer: FC<TimerProps> = ({seconds}) => {
-  const [timeLeft, setTimeLeft] = useState(seconds);
-
-  useEffect(() => {
-    if (!timeLeft) return;
-
-    const intervalId = setInterval(() => setTimeLeft(timeLeft - 1), 1000);
-
-    return () => clearInterval(intervalId);
-  }, [timeLeft]);
-
-  return (
-    <Text fontFamily="monospace" fontSize="8rem" fontWeight="700">
-      {String(Math.floor(timeLeft / 60)).padStart(2, "0")}:
-      {String(Math.round(timeLeft % 60)).padStart(2, "0")}
-    </Text>
-  );
-};
 
 const GradientScreen: FC = () => {
   return (
@@ -53,25 +30,6 @@ const GradientScreen: FC = () => {
         w="100%"
         zIndex={0}
       />
-      <Stack
-        alignSelf="flex-end"
-        fontFamily="inter"
-        lineHeight="1.1"
-        padding={12}
-        spacing={0}
-        textAlign="right"
-        zIndex={1}
-      >
-        <Text
-          bgClip="text"
-          bgGradient="linear(to-l, primary.300, primary.500)"
-          fontSize="9rem"
-          fontWeight="700"
-        >
-          empezamos en
-        </Text>
-        <Timer seconds={100} />
-      </Stack>
     </Stack>
   );
 };
