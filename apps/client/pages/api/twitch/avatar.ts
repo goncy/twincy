@@ -1,36 +1,45 @@
-import type {NextApiRequest, NextApiResponse} from "next";
+import {NextRequest} from "next/server";
 
-type Request = NextApiRequest & {
-  query: {
-    user: string;
-  };
+import api from "@/twitch/api";
+
+// Use edge
+export const config = {
+  runtime: "experimental-edge",
 };
 
-export default async function handler(req: Request, res: NextApiResponse) {
-  // Create request headers
-  const headers = new Headers();
+interface Cookie {
+  token: string | undefined;
+  expires: Date | null;
+}
 
-  // Set request headers
-  headers.set("Client-Id", process.env.CLIENT_ID as string);
-  headers.set("Authorization", `Bearer ${req.cookies["token"]}`);
+export default async function handler(req: NextRequest) {
+  // Get user from url
+  const {searchParams} = new URL(req.url);
+  const user = searchParams.get("user") as string;
+  // Set partial cookie
+  let cookie: Cookie = {
+    token: req.cookies.get("token")?.value,
+    expires: null,
+  };
+
+  // Get token if not present
+  if (!cookie.token) {
+    const {token, expires} = await api.token.fetch();
+
+    cookie = {token, expires};
+  }
 
   // Extract image
-  const {
-    data: [{profile_image_url: image}],
-  } = await fetch(`https://api.twitch.tv/helix/users?login=${req.query.user}`, {
-    headers,
-  }).then((res) => res.json());
+  const image = await api.avatar.fetch(user, cookie.token as string);
 
-  // Fetch image
-  const response = await fetch(image);
+  // Return image
+  const blob = await fetch(image);
 
-  // Cache it
-  res.setHeader("content-type", response.headers.get("content-type") as string);
-  res.setHeader("content-length", response.headers.get("content-length") as string);
-  res.setHeader("etag", response.headers.get("etag") as string);
-  res.setHeader("date", response.headers.get("date") as string);
-  res.setHeader("cache-control", "public, immutable, max-age=31536000");
+  // Set token cookie
+  if (cookie.token && cookie.expires) {
+    blob.headers.set("Set-Cookie", `token=${cookie.token}; expires=${cookie.expires};`);
+  }
 
-  // Return it
-  return res.status(200).send(response.body);
+  // Return blob
+  return blob;
 }

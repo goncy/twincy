@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx watch ./src/app.ts --clear-screen=false",
+    "dev": "tsx ./src/app.ts --clear-screen=false",
     "build": "esbuild ./src/app.ts --bundle --platform=node --outfile=./dist/app.js",
     "prestart": "npm run build",
     "start": "node ./dist/app.js"
