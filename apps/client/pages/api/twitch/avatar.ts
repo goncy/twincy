@@ -4,7 +4,7 @@ import api from "@/twitch/api";
 
 // Use edge
 export const config = {
-  runtime: "experimental-edge",
+  runtime: "edge",
 };
 
 interface Cookie {
