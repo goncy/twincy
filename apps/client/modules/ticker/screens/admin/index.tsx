@@ -7,8 +7,9 @@ import {Flex, Stack, StackDivider, Text} from "@chakra-ui/react";
 import {ChatIcon, DeleteIcon, StarIcon} from "@chakra-ui/icons";
 import Head from "next/head";
 
-import {parseMessage} from "./utils";
+import {includesString, parseMessage} from "./utils";
 import Message from "./components/Message";
+import SearchInput from "./components/SearchInput";
 
 import Navbar from "~/components/Navbar";
 import {useSocket} from "@/socket/context";
@@ -16,18 +17,25 @@ import {useSocket} from "@/socket/context";
 const TickerAdminScreen = () => {
   const socket = useSocket();
   const [limit, setLimit] = useState<number>(100);
+  const [query, setQuery] = useState<null | string>(null);
   const [buffer, setBuffer] = useState<IMessage[]>([]);
   const [selected, setSelected] = useState<null | IMessage["id"]>(null);
   const [bookmark, setBookmark] = useState<null | IMessage["id"]>(null);
   const [favorites, setFavorites] = useState<IMessage["id"][]>([]);
   const [onlyHighlighted, toggleOnlyHighlighted] = useState<boolean>(false);
   const messages = useMemo(() => {
+    let draft = buffer;
+
     if (onlyHighlighted) {
-      return buffer.filter((message) => message.isHighlighted);
+      draft = draft.filter((message) => message.isHighlighted);
     }
 
-    return buffer;
-  }, [buffer, onlyHighlighted]);
+    if (query) {
+      draft = draft.filter((message) => includesString(message.message, query));
+    }
+
+    return draft;
+  }, [buffer, query, onlyHighlighted]);
 
   function handleToggleSelected(message: IMessage) {
     socket.emit("messages:select", selected === message.id ? null : message);
@@ -75,6 +83,7 @@ const TickerAdminScreen = () => {
       </Head>
       <Stack backgroundColor="background" height="100%" spacing={4}>
         <Navbar>
+          <SearchInput value={query} onChange={setQuery} onClose={() => setQuery(null)} />
           <Stack alignItems="center" direction="row" spacing={4}>
             <StarIcon
               color={onlyHighlighted ? "secondary.500" : "white"}

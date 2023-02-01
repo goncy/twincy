@@ -9,7 +9,11 @@ import {AnimatePresence, motion} from "framer-motion";
 
 import {useSocket} from "@/socket/context";
 
-const ChatIndexScreen: FC = () => {
+interface Props {
+  avatar?: boolean;
+}
+
+const ChatIndexScreen: FC<Props> = ({avatar}) => {
   const socket = useSocket();
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -26,7 +30,7 @@ const ChatIndexScreen: FC = () => {
   }, [socket]);
 
   return (
-    <Stack direction="column-reverse" height="100%" spacing={2} style={{color: "black"}}>
+    <Stack direction="column-reverse" height="100%" spacing={12} style={{color: "black"}}>
       <AnimatePresence>
         {messages.map((message) => (
           <motion.main
@@ -38,51 +42,52 @@ const ChatIndexScreen: FC = () => {
           >
             <Stack
               alignItems="flex-start"
-              backgroundColor="gray.800"
               borderRadius="lg"
               direction="row"
-              padding={4}
-              spacing={3}
+              spacing={4}
               width="fit-content"
             >
-              <Image
-                alt={`${message.sender.name} profile picture`}
-                backgroundColor="blackAlpha.700"
-                borderRadius={9999}
-                height={16}
-                src={`/api/twitch/avatar?user=${message.sender.name}`}
-                width={16}
-              />
-              <Stack spacing={0}>
+              {avatar && (
+                <Image
+                  alt={`${message.sender.name} profile picture`}
+                  backgroundColor="blackAlpha.700"
+                  borderRadius={9999}
+                  height="4.7rem"
+                  src={`/api/twitch/avatar?user=${message.sender.name}`}
+                  width="4.7rem"
+                />
+              )}
+              <Stack spacing={0} textShadow="1px 1px 2px black">
                 <Box
                   alignItems="center"
                   display="inline-flex"
                   fontSize="3.2rem"
                   fontWeight={500}
-                  gap={3}
+                  gap={2}
                   lineHeight="normal"
                   marginBottom={1}
                   textTransform="uppercase"
                 >
+                  {Boolean(message.sender.badges?.length) && (
+                    <Box as="span" display="inline-flex" gap={1}>
+                      {message.sender.badges?.map((badge) => (
+                        <Image key={badge} alt={badge} height={6} src={badge} width={6} />
+                      ))}
+                    </Box>
+                  )}
                   <Text
                     as="span"
                     color="white"
                     dangerouslySetInnerHTML={{__html: message.sender.name}}
-                    fontSize="2xl"
+                    fontSize="1.75rem"
                   />
-                  {Boolean(message.sender.badges?.length) && (
-                    <Box as="span" display="inline-flex" gap={2}>
-                      {message.sender.badges?.map((badge) => (
-                        <Image key={badge} alt={badge} height={5} src={badge} width={5} />
-                      ))}
-                    </Box>
-                  )}
                 </Box>
                 <Text
-                  color="whiteAlpha.800"
+                  color="whiteAlpha.900"
                   dangerouslySetInnerHTML={{__html: message.message}}
                   display="inline-block"
-                  fontSize="xl"
+                  fontSize="1.6rem"
+                  fontWeight={300}
                   sx={{
                     "& i": {
                       width: 6,

@@ -1,5 +1,18 @@
 import type {Message} from "@twincy/types";
 
+export function includesString(text: string, query: string) {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .includes(
+      query
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase(),
+    );
+}
+
 export function parseMessage(event: Message): Message {
   // Store the draft message
   let text = event.message;

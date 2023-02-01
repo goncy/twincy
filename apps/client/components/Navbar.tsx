@@ -26,6 +26,7 @@ const Navbar: React.VFC<Props> = ({children = null}) => {
         </Stack>
       </Heading>
       <Stack alignItems="center" direction="row" spacing={4}>
+        {children}
         <Box color="white" cursor="pointer" onClick={toggleColorMode}>
           {colorMode === "dark" ? (
             <SunIcon height={5} width={5} />
@@ -33,7 +34,6 @@ const Navbar: React.VFC<Props> = ({children = null}) => {
             <MoonIcon height={5} width={5} />
           )}
         </Box>
-        {children}
       </Stack>
     </Stack>
   );

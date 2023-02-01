@@ -11,8 +11,7 @@
     },
     "start": {
       "persistent": true,
-      "dependsOn": ["build"],
-      "inputs": [".next/BUILD_ID", "dist/app.js"]
+      "dependsOn": ["build"]
     }
   }
 }
