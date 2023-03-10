@@ -35,7 +35,7 @@ io.on("connection", async (socket) => {
 
   // If no channel is provided, return
   if (!channel) {
-    return;
+    return socket.disconnect();
   }
 
   // Join the socket to the channel
