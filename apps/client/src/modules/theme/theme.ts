@@ -24,8 +24,8 @@ export default extendTheme({
     },
   },
   fonts: {
-    body: "var(--font-roboto, sans-serif",
-    heading: "var(--font-roboto, sans-serif",
+    body: "var(--font-roboto), sans-serif",
+    heading: "var(--font-roboto), sans-serif",
     mono: "Menlo, monospace",
     inter: "var(--font-inter), 'Inter', sans-serif",
     pressStart: "var(--font-press-start), 'Press Start 2P', cursive",
