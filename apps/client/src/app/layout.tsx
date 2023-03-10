@@ -1,10 +1,14 @@
-import {Inter, Press_Start_2P} from "@next/font/google";
+import {Inter, Press_Start_2P} from "next/font/google";
 
 import ThemeProvider from "@/theme/provider";
 
 interface Props {
   children: React.ReactNode;
 }
+
+export const meta = {
+  title: "Twincy",
+};
 
 // Declare fonts for usage
 const inter = Inter({subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-inter"});

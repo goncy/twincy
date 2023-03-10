@@ -19,7 +19,7 @@ const SocketContext = React.createContext({} as Context);
 function SocketProvider({children}: Props) {
   const searchParams = useSearchParams();
   const [socket, setSocket] = useState<Socket | null>(null);
-  const channel = searchParams.get("channel") as string;
+  const channel = searchParams!.get("channel") as string;
 
   useEffect(() => {
     function handleConnect() {
@@ -27,7 +27,7 @@ function SocketProvider({children}: Props) {
     }
 
     // Create the socket
-    const socket = SocketIO(`${window.location.hostname}:6600`, {
+    const socket = SocketIO(process.env.NEXT_PUBLIC_WS_SERVER!, {
       autoConnect: false,
       reconnection: true,
       reconnectionAttempts: 100,
