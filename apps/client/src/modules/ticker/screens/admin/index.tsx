@@ -4,7 +4,7 @@ import type {Message as IMessage} from "@twincy/types";
 
 import {useEffect, useMemo, useState} from "react";
 import {Flex, Stack, StackDivider, Text} from "@chakra-ui/react";
-import {ChatIcon, DeleteIcon, StarIcon} from "@chakra-ui/icons";
+import {ChatIcon, DeleteIcon, LockIcon, StarIcon} from "@chakra-ui/icons";
 import Head from "next/head";
 
 import {includesString, parseMessage} from "./utils";
@@ -23,6 +23,7 @@ const TickerAdminScreen = () => {
   const [bookmark, setBookmark] = useState<null | IMessage["id"]>(null);
   const [favorites, setFavorites] = useState<IMessage["id"][]>([]);
   const [onlyHighlighted, toggleOnlyHighlighted] = useState<boolean>(false);
+  const [showFavorites, toggleFavorites] = useState<boolean>(false);
   const messages = useMemo(() => {
     let draft = buffer;
 
@@ -85,6 +86,13 @@ const TickerAdminScreen = () => {
         <Navbar>
           <SearchInput value={query} onChange={setQuery} onClose={() => setQuery(null)} />
           <Stack alignItems="center" direction="row" spacing={4}>
+            <LockIcon
+              color={showFavorites ? "primary.500" : "white"}
+              cursor="pointer"
+              height={5}
+              width={5}
+              onClick={() => toggleFavorites((showFavorites) => !showFavorites)}
+            />
             <StarIcon
               color={onlyHighlighted ? "secondary.500" : "white"}
               cursor="pointer"
@@ -109,7 +117,7 @@ const TickerAdminScreen = () => {
             <Text color="solid" fontWeight="500" textTransform="uppercase">
               All messages
             </Text>
-            <Stack flex={1} overflowY="auto" spacing={4}>
+            <Stack flex={1} overflowY="scroll" paddingRight={4} spacing={4}>
               {messages.length ? (
                 <>
                   {messages.length > limit && (
@@ -167,39 +175,41 @@ const TickerAdminScreen = () => {
               )}
             </Stack>
           </Stack>
-          <Stack flex={1}>
-            <Text color="solid" fontWeight="500" textTransform="uppercase">
-              Favorites
-            </Text>
-            <Stack flex={1} overflowY="auto" spacing={4}>
-              {Boolean(favorites.length) ? (
-                buffer
-                  .filter((message) => favorites.includes(message.id))
-                  .map((message) => {
-                    const isSelected = selected === message.id;
+          {showFavorites && (
+            <Stack flex={1}>
+              <Text color="solid" fontWeight="500" textTransform="uppercase">
+                Favorites
+              </Text>
+              <Stack flex={1} overflowY="scroll" paddingRight={4} spacing={4}>
+                {Boolean(favorites.length) ? (
+                  buffer
+                    .filter((message) => favorites.includes(message.id))
+                    .map((message) => {
+                      const isSelected = selected === message.id;
 
-                    return (
-                      <Message
-                        key={message.id}
-                        isFavorite
-                        badges={message.sender.badges}
-                        isHighlighted={message.isHighlighted}
-                        isSelected={isSelected}
-                        message={message}
-                        sender={message.sender.name}
-                        timestamp={message.timestamp}
-                        onFavorite={() => handleToggleFavorite(message.id)}
-                        onSelect={() => handleToggleSelected(message)}
-                      />
-                    );
-                  })
-              ) : (
-                <Text fontSize="xl" margin="auto" opacity={0.5}>
-                  No messages in favorites
-                </Text>
-              )}
+                      return (
+                        <Message
+                          key={message.id}
+                          isFavorite
+                          badges={message.sender.badges}
+                          isHighlighted={message.isHighlighted}
+                          isSelected={isSelected}
+                          message={message}
+                          sender={message.sender.name}
+                          timestamp={message.timestamp}
+                          onFavorite={() => handleToggleFavorite(message.id)}
+                          onSelect={() => handleToggleSelected(message)}
+                        />
+                      );
+                    })
+                ) : (
+                  <Text fontSize="xl" margin="auto" opacity={0.5}>
+                    No messages in favorites
+                  </Text>
+                )}
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </Stack>
       </Stack>
     </>
