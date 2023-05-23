@@ -53,7 +53,7 @@ const ChatIndexScreen: FC<Props> = ({avatar}) => {
                   backgroundColor="blackAlpha.700"
                   borderRadius={9999}
                   height="4.7rem"
-                  src={`/api/twitch/avatar?user=${message.sender.name}`}
+                  src={`/avatar/twitch?user=${message.sender.name}`}
                   width="4.7rem"
                 />
               )}

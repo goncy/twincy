@@ -12,7 +12,7 @@ interface Cookie {
   expires: Date | null;
 }
 
-export default async function handler(req: NextRequest) {
+export async function GET(req: NextRequest) {
   // Get user from url
   const {searchParams} = new URL(req.url);
   const user = searchParams.get("user") as string;
