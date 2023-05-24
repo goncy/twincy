@@ -235,7 +235,7 @@ const PokemonScreen = () => {
       backgroundColor="white"
       color="black"
       flexDirection="column"
-      fontFamily="pressStart"
+      fontFamily="var(--font-press-start)"
       height="100vh"
       justifyContent="center"
       width="100vw"
