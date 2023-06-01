@@ -11,7 +11,7 @@ import {useSocket} from "@/socket/context";
 
 export default function VoteScreen() {
   const socket = useSocket();
-  const [status, setStatus] = useState<"inactive" | "active" | "closed">("active");
+  const [status, setStatus] = useState<"inactive" | "active" | "closed">("inactive");
   const [votes, setVotes] = useState<Map<string, string>>(() => new Map<string, string>());
   const [answers, setAnswers] = useState<string[]>([]);
   const searchParams = useSearchParams();
