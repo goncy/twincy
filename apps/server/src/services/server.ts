@@ -4,6 +4,8 @@ import express from "express";
 
 import { initWSServer } from "./socket";
 
+import router from "~/routes";
+
 const app = express();
 app.use(express.json());
 app.use(
@@ -11,6 +13,7 @@ app.use(
     extended: true,
   }),
 );
+app.use("/api", router);
 
 const server = new http.Server(app);
 initWSServer(server);
