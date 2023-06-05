@@ -1,5 +1,6 @@
 import * as http from "http";
 
+import cors from "cors";
 import express from "express";
 
 import { initWSServer } from "./socket";
@@ -11,6 +12,11 @@ app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
+  }),
+);
+app.use(
+  cors({
+    origin: "http://localhost:6601",
   }),
 );
 app.use("/api", router);

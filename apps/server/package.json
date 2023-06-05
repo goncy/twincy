@@ -12,6 +12,7 @@
   "dependencies": {
     "@discordjs/core": "^0.6.0",
     "@discordjs/rest": "^1.7.1",
+    "cors": "^2.8.5",
     "esbuild": "^0.17.2",
     "socket.io": "^4.5.4",
     "tmi.js": "^1.8.5",
