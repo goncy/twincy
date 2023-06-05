@@ -1,6 +1,6 @@
 import express from "express";
 
-import { channelsAPI } from "~/services/discord";
+import { channelsAPI, guildsAPI } from "~/services/discord";
 
 const discordRouter = express.Router();
 
@@ -44,7 +44,7 @@ discordRouter.get("/messages", async (req, res) => {
   res.json({data: possibleProjects});
 });
 
-discordRouter.post("/messages/:id", async (req, res) => {
+discordRouter.post("/messages/reaction/:id", async (req, res) => {
   const messageID = req.params.id;
   const {emoji, channel_id} = req.body;
 
@@ -56,7 +56,7 @@ discordRouter.post("/messages/:id", async (req, res) => {
   }
 });
 
-discordRouter.delete("/messages/:id", async (req, res) => {
+discordRouter.delete("/messages/reaction/:id", async (req, res) => {
   const messageID = req.params.id;
   const {emoji, channel_id} = req.body;
 
@@ -65,6 +65,28 @@ discordRouter.delete("/messages/:id", async (req, res) => {
     res.json({success: true});
   } catch (e) {
     res.status(500).json({success: false, msg: "No se pudo eliminar la reacción al mensaje."});
+  }
+});
+
+discordRouter.get("/guilds", async (req, res) => {
+  const guildID = req.query.guild_id as string;
+  try {
+    const resp = await guildsAPI.get(guildID);
+
+    res.json(resp);
+  } catch (e) {
+    res.status(500).json({success: false, msg: "No se pudo obtener el detalle del servidor"});
+  }
+});
+
+discordRouter.get("/guilds/channels", async (req, res) => {
+  const guildID = req.query.guild_id as string;
+  try {
+    const resp = await guildsAPI.getChannels(guildID);
+
+    res.json(resp);
+  } catch (e) {
+    res.status(500).json({success: false, msg: "No se pudieron obtener los canales del servidor"});
   }
 });
 
