@@ -1,6 +1,6 @@
 import express from "express";
 
-import { channelsAPI, guildsAPI } from "~/services/discord";
+import { channelsAPI, guildsAPI, oAuth2API } from "~/services/discord";
 
 const discordRouter = express.Router();
 
@@ -26,7 +26,7 @@ discordRouter.get("/messages", async (req, res) => {
     emoji,
     {limit: 100},
   );
-  const botID = "826273567141396490";
+  const botID = (await oAuth2API.getCurrentBotApplicationInformation()).id;
   const botHasReacted = usersReactions.some((user) => user.id === botID);
 
   if (!botHasReacted) {
