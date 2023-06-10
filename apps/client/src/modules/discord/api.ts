@@ -1,30 +1,22 @@
 import axios from "axios";
 
-import { Channel, DiscordMessage, Guild } from "./interface";
+import { Channel, Guild, Message } from "./interface";
 
 const api = {
   messages: {
-    fetch: async (channelID: Channel["id"]): Promise<DiscordMessage[]> => {
+    fetch: async (channelID: Channel["id"]): Promise<Message[]> => {
       const url = `http://localhost:6600/api/discord/messages?channel_id=${channelID}`;
       const res = await axios.get(url);
 
       return res.data.data;
     },
-    addReaction: async (
-      channelID: Channel["id"],
-      messageID: DiscordMessage["id"],
-      emoji: string,
-    ) => {
+    addReaction: async (channelID: Channel["id"], messageID: Message["id"], emoji: string) => {
       const url = `http://localhost:6600/api/discord/messages/reaction/${messageID}`;
       const data = {emoji, channel_id: channelID};
 
       return axios.post(url, data);
     },
-    deleteReaction: async (
-      channelID: Channel["id"],
-      messageID: DiscordMessage["id"],
-      emoji: string,
-    ) => {
+    deleteReaction: async (channelID: Channel["id"], messageID: Message["id"], emoji: string) => {
       const url = `http://localhost:6600/api/discord/messages/reaction/${messageID}`;
       const data = {emoji, channel_id: channelID};
 
