@@ -15,6 +15,7 @@ interface ServerInfoProps {
 export default function ServerInfo({onChangeChannel}: ServerInfoProps) {
   const [guildsDetail, setGuildsDetail] = useState<Guild | null>(null);
   const [channels, setChannels] = useState<Channel[] | null>(null);
+  const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
 
   const getGuildsInfo = async (guildID: Guild["id"]) => {
     const guild = await api.guild.fetch(guildID);
@@ -23,6 +24,17 @@ export default function ServerInfo({onChangeChannel}: ServerInfoProps) {
 
     setGuildsDetail(guild);
     setChannels(onlyTextChannels);
+
+    const savedChannelID = localStorage.getItem("channel_id");
+
+    if (savedChannelID) {
+      const channel = onlyTextChannels.find(({id}) => id === savedChannelID);
+
+      if (channel) {
+        onChangeChannel(channel);
+        setSelectedChannel(channel);
+      }
+    }
   };
 
   const handleChangeChannel = (event: React.ChangeEvent) => {
@@ -31,6 +43,8 @@ export default function ServerInfo({onChangeChannel}: ServerInfoProps) {
     const channel = channels?.find((channel) => channel.id === id)!;
 
     onChangeChannel(channel);
+    setSelectedChannel(channel);
+    localStorage.setItem("channel_id", channel.id);
   };
 
   useEffect(() => {
@@ -55,7 +69,7 @@ export default function ServerInfo({onChangeChannel}: ServerInfoProps) {
           >
             {guildsDetail.name}
           </Text>
-          <Select defaultValue="" onChange={handleChangeChannel}>
+          <Select value={selectedChannel?.id ?? ""} onChange={handleChangeChannel}>
             <option disabled value="">
               Seleccionar canal
             </option>
