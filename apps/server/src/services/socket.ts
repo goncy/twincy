@@ -76,6 +76,23 @@ export const initWSServer = (server: http.Server) => {
       // Only to self
       io.to(channel).emit("review:replace", reviews);
     });
+
+    // // VOTE
+
+    socket.on("votation:start", async (options: string) => {
+      //Only to self
+      io.to(channel).emit("votation:start", options);
+    });
+
+    socket.on("votation:close", async () => {
+      //Only to self
+      io.to(channel).emit("votation:close");
+    });
+
+    socket.on("votation:end", async () => {
+      //Only to self
+      io.to(channel).emit("votation:end");
+    });
   });
 };
 

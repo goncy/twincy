@@ -10,6 +10,7 @@ import Project from "./components/Project";
 import ServerInfo from "./components/ServerInfo";
 
 import api from "@/discord/api";
+import { useSocket } from "@/socket/context";
 
 function ProjectsScreen() {
   const [messages, setMessages] = useState<Message[] | null>(null);
@@ -17,6 +18,7 @@ function ProjectsScreen() {
   const [status, setStatus] = useState("initial");
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const socket = useSocket();
 
   const getMessages = async () => {
     setLoading(true);
@@ -37,13 +39,17 @@ function ProjectsScreen() {
   };
 
   const handleInitVotation = (message: Message) => {
+    const options = "1,2,3,4,5";
+
     setSelectedMessage(message);
     setStatus("active");
+    socket.emit("votation:start", options);
   };
 
   const handleCloseVotation = (message: Message) => {
     api.messages.deleteReaction(selectedChannel?.id!, message.id, "⌛");
     api.messages.addReaction(selectedChannel?.id!, message.id, "✅");
+    socket.emit("votation:close");
   };
 
   const handleEndVotation = (message: Message) => {
@@ -54,6 +60,7 @@ function ProjectsScreen() {
       (currentMessages) =>
         currentMessages?.filter((_message) => _message.id !== message.id) ?? null,
     );
+    socket.emit("votation:end");
   };
 
   const omitMessage = (message: Message) => {

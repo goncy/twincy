@@ -1,13 +1,13 @@
 "use client";
 
-import type {Message} from "@twincy/types";
+import type { Message } from "@twincy/types";
 
-import {useEffect, useMemo, useState} from "react";
-import {List, ListItem, Stack, Text} from "@chakra-ui/react";
-import {useSearchParams} from "next/navigation";
+import { List, ListItem, Stack, Text } from "@chakra-ui/react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import Confetti from "react-confetti";
 
-import {useSocket} from "@/socket/context";
+import { useSocket } from "@/socket/context";
 
 export default function VoteScreen() {
   const socket = useSocket();
@@ -27,21 +27,30 @@ export default function VoteScreen() {
     [votes, answers],
   );
 
+  function handleStartVotation(answers: string) {
+    setStatus("active");
+    setAnswers(answers.split(",").map((answer) => answer.trim().toLowerCase()));
+  }
+
+  function handleCloseVotation() {
+    setStatus("closed");
+  }
+
+  function handleEndVotation() {
+    setStatus("inactive");
+    setVotes(new Map());
+    setAnswers([]);
+  }
+
   useEffect(() => {
     const handleMessage = (event: Message) => {
       if (searchParams.get("channel")?.toLowerCase() === event.sender.name.toLowerCase()) {
         if (event.message.startsWith("!votestart")) {
-          const [, rest] = event.message.split("!votestart ");
+          const [, answers] = event.message.split("!votestart ");
 
-          setStatus("active");
-          setAnswers(rest.split(",").map((answer) => answer.trim().toLowerCase()));
-        } else if (event.message.startsWith("!voteclose")) {
-          setStatus("closed");
-        } else if (event.message.startsWith("!voteend")) {
-          setStatus("inactive");
-          setVotes(new Map());
-          setAnswers([]);
-        }
+          handleStartVotation(answers);
+        } else if (event.message.startsWith("!voteclose")) handleCloseVotation();
+        else if (event.message.startsWith("!voteend")) handleEndVotation();
       }
 
       if (status === "active") {
@@ -56,6 +65,9 @@ export default function VoteScreen() {
     };
 
     socket.on("message", handleMessage);
+    socket.on("votation:start", (answers) => handleStartVotation(answers));
+    socket.on("votation:close", () => handleCloseVotation());
+    socket.on("votation:end", () => handleEndVotation());
 
     return () => {
       socket.off("message", handleMessage);
