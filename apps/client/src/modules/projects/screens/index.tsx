@@ -89,12 +89,13 @@ function ProjectsScreen() {
       alignItems="center"
       backgroundColor="gray.800"
       direction="column"
-      height="100vh"
+      height="100%"
       justifyContent="center"
+      minHeight="100vh"
       width="100vw"
     >
-      <Box backgroundColor="gray.700" padding={10}>
-        <Flex justifyContent="center">
+      <Box backgroundColor="gray.700" maxHeight="70%" padding={10}>
+        <Flex height={100} justifyContent="center">
           <ServerInfo
             guildID={guildID}
             onChangeChannel={(channel) => setSelectedChannel(channel)!}
@@ -105,28 +106,30 @@ function ProjectsScreen() {
             <CircularProgress isIndeterminate />
           </Flex>
         )}
-        {messages?.length === 0 && loading === false ? (
-          <Alert mt={10} status="error">
-            <AlertIcon />
-            <AlertTitle>No se encontró el último proyecto visto</AlertTitle>
-          </Alert>
-        ) : (
-          messages?.map((message) => (
-            <Project
-              key={message.id}
-              guildID={guildID}
-              message={message}
-              selected={selectedMessage?.id === message.id}
-              status={status}
-              onCloseVotation={() => handleCloseVotation(message)}
-              onEndVotation={() => handleEndVotation(message)}
-              onInitVotation={() => handleInitVotation(message)}
-              onOmit={() => omitMessage(message)}
-              onReject={() => handleRejectProject(message)}
-              onVisitPage={() => handleVisitPage(message)}
-            />
-          ))
-        )}
+        <Box height="calc(100% - 100px)" overflowY="auto" paddingRight={8}>
+          {messages?.length === 0 && loading === false ? (
+            <Alert mt={10} status="error">
+              <AlertIcon />
+              <AlertTitle>No se encontró el último proyecto visto</AlertTitle>
+            </Alert>
+          ) : (
+            messages?.map((message) => (
+              <Project
+                key={message.id}
+                guildID={guildID}
+                message={message}
+                selected={selectedMessage?.id === message.id}
+                status={status}
+                onCloseVotation={() => handleCloseVotation(message)}
+                onEndVotation={() => handleEndVotation(message)}
+                onInitVotation={() => handleInitVotation(message)}
+                onOmit={() => omitMessage(message)}
+                onReject={() => handleRejectProject(message)}
+                onVisitPage={() => handleVisitPage(message)}
+              />
+            ))
+          )}
+        </Box>
       </Box>
     </Flex>
   );
