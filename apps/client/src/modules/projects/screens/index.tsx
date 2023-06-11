@@ -94,7 +94,7 @@ function ProjectsScreen() {
       minHeight="100vh"
       width="100vw"
     >
-      <Box backgroundColor="gray.700" maxHeight="70%" padding={10}>
+      <Box backgroundColor="#2b2d31" maxHeight="70%" padding={10}>
         <Flex height={100} justifyContent="center">
           <ServerInfo
             guildID={guildID}
@@ -106,7 +106,12 @@ function ProjectsScreen() {
             <CircularProgress isIndeterminate />
           </Flex>
         )}
-        <Box height="calc(100% - 100px)" overflowY="auto" paddingRight={8}>
+        <Box
+          backgroundColor="#313338"
+          height="calc(100% - 100px)"
+          overflowY="auto"
+          paddingRight={8}
+        >
           {messages?.length === 0 && loading === false ? (
             <Alert mt={10} status="error">
               <AlertIcon />

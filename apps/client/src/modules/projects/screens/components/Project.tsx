@@ -43,7 +43,7 @@ export default function Project({
   const links = message.content.match(regex);
 
   return (
-    <Flex key={message.id} gap={5} marginY={8}>
+    <Flex gap={5} marginY={8} padding={4}>
       <Box>
         <Avatar
           src={`https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`}
