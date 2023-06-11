@@ -1,6 +1,6 @@
 import express from "express";
 
-import { channelsAPI, guildsAPI, oAuth2API } from "~/services/discord";
+import { channelsAPI, guildsAPI } from "~/services/discord";
 
 const discordRouter = express.Router();
 
@@ -9,7 +9,7 @@ discordRouter.get("/messages", async (req, res) => {
   const messages = await channelsAPI.getMessages(channelID, {limit: 100});
   const emoji = "✅";
   const lastMessageReacted = messages.find((message) =>
-    message.reactions?.some((reaction) => reaction.emoji.name === emoji),
+    message.reactions?.some((reaction) => reaction.emoji.name === emoji && reaction.me),
   );
 
   if (!lastMessageReacted) {
@@ -18,21 +18,8 @@ discordRouter.get("/messages", async (req, res) => {
   }
 
   const lastMessageIndex = messages.findIndex((message) =>
-    message.reactions?.some((reaction) => reaction.emoji.name === emoji),
+    message.reactions?.some((reaction) => reaction.emoji.name === emoji && reaction.me),
   );
-  const usersReactions = await channelsAPI.getMessageReactions(
-    channelID,
-    lastMessageReacted.id,
-    emoji,
-    {limit: 100},
-  );
-  const botID = (await oAuth2API.getCurrentBotApplicationInformation()).id;
-  const botHasReacted = usersReactions.some((user) => user.id === botID);
-
-  if (!botHasReacted) {
-    res.status(404).json({success: false, msg: "No se encontró el último proyecto visto."});
-    return;
-  }
 
   const messagesSinceLastReacted = messages.slice(0, lastMessageIndex);
   // Filter messages without links
