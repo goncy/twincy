@@ -19,6 +19,7 @@ function ProjectsScreen() {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const socket = useSocket();
+  const guildID = "505180649787752450";
 
   const getMessages = async () => {
     setLoading(true);
@@ -94,7 +95,10 @@ function ProjectsScreen() {
     >
       <Box backgroundColor="gray.700" padding={10}>
         <Flex justifyContent="center">
-          <ServerInfo onChangeChannel={(channel) => setSelectedChannel(channel)!} />
+          <ServerInfo
+            guildID={guildID}
+            onChangeChannel={(channel) => setSelectedChannel(channel)!}
+          />
         </Flex>
         {loading && (
           <Flex alignItems="center" justifyContent="center" marginTop={10}>
@@ -110,6 +114,7 @@ function ProjectsScreen() {
           messages?.map((message) => (
             <Project
               key={message.id}
+              guildID={guildID}
               message={message}
               selected={selectedMessage?.id === message.id}
               status={status}

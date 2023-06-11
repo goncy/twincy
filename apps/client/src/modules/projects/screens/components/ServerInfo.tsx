@@ -6,13 +6,12 @@ import { useEffect, useState } from "react";
 import api from "@/discord/api";
 import { Channel, Guild } from "@/discord/interface";
 
-const guildID = "505180649787752450";
-
 interface ServerInfoProps {
   onChangeChannel: (channel: Channel) => Channel;
+  guildID: string;
 }
 
-export default function ServerInfo({onChangeChannel}: ServerInfoProps) {
+export default function ServerInfo({onChangeChannel, guildID}: ServerInfoProps) {
   const [guildsDetail, setGuildsDetail] = useState<Guild | null>(null);
   const [channels, setChannels] = useState<Channel[] | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);

@@ -1,15 +1,15 @@
 import {
-    Avatar,
-    Box,
-    Button,
-    CloseButton,
-    Flex,
-    Link,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    Text,
+  Avatar,
+  Box,
+  Button,
+  CloseButton,
+  Flex,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
 } from "@chakra-ui/react";
 
 import { Message } from "../../../discord/interface";
@@ -17,6 +17,7 @@ import { Message } from "../../../discord/interface";
 interface ProjectProps {
   message: Message;
   selected: boolean;
+  guildID: string;
   onVisitPage: () => void;
   onInitVotation: () => void;
   onCloseVotation: () => void;
@@ -35,6 +36,7 @@ export default function Project({
   onReject,
   onOmit,
   selected,
+  guildID,
   status,
 }: ProjectProps) {
   const regex = /(https?:\/\/[^\s]+)/g;
@@ -141,7 +143,13 @@ export default function Project({
               :
             </MenuButton>
             <MenuList padding={0}>
-              <MenuItem as="button">Ver mensaje en discord</MenuItem>
+              <MenuItem
+                as="a"
+                href={`https://discord.com/channels/${guildID}/${message.channel_id}/${message.id}`}
+                target="_blank"
+              >
+                Ver mensaje en discord
+              </MenuItem>
               <MenuItem as="button" backgroundColor="red.400" onClick={onReject}>
                 Rechazar
               </MenuItem>
