@@ -20,8 +20,13 @@ discordRouter.get("/messages", async (req, res) => {
   const lastMessageIndex = messages.findIndex((message) =>
     message.reactions?.some((reaction) => reaction.emoji.name === emoji && reaction.me),
   );
-
   const messagesSinceLastReacted = messages.slice(0, lastMessageIndex);
+
+  if (messagesSinceLastReacted.length === 0) {
+    res.status(404).json({success: false, msg: "No se encontró el último proyecto visto."});
+    return;
+  }
+
   // Filter messages without links
   const regex = /(https?:\/\/[^\s]+)/;
   const possibleProjects = messagesSinceLastReacted
