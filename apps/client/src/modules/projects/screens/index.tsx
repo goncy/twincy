@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, AlertIcon, AlertTitle, Box, CircularProgress, Flex } from "@chakra-ui/react";
+import { Alert, AlertIcon, AlertTitle, Box, CircularProgress, Flex, Text } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ import { useSocket } from "@/socket/context";
 function ProjectsScreen() {
   const [messages, setMessages] = useState<Message[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [status, setStatus] = useState("initial");
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
@@ -23,16 +24,22 @@ function ProjectsScreen() {
 
   const getMessages = async () => {
     setLoading(true);
+    setError(false);
     try {
       const messages = await api.messages.fetch(selectedChannel?.id!);
 
       setMessages(messages);
+      setError(false);
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
-        if (err.response?.status === 404) setMessages([]);
+        if (err.response?.status === 404) {
+          setMessages(null);
+          setError(true);
+        }
       }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleVisitPage = (message: Message) => {
@@ -106,19 +113,26 @@ function ProjectsScreen() {
             <CircularProgress isIndeterminate />
           </Flex>
         )}
-        <Box
-          backgroundColor="#313338"
-          height="calc(100% - 100px)"
-          overflowY="auto"
-          paddingRight={8}
-        >
-          {messages?.length === 0 && loading === false ? (
-            <Alert mt={10} status="error">
-              <AlertIcon />
-              <AlertTitle>No se encontró el último proyecto visto</AlertTitle>
-            </Alert>
-          ) : (
-            messages?.map((message) => (
+        {error && (
+          <Alert mt={5} status="error">
+            <AlertIcon />
+            <AlertTitle>No se encontró el último proyecto visto</AlertTitle>
+          </Alert>
+        )}
+        {messages?.length === 0 && (
+          <Box textAlign="center">
+            <Text fontSize="2xl">Terminamos! ✨</Text>
+            <Text fontSize="lg">No quedan más proyectos por revisar</Text>
+          </Box>
+        )}
+        {!error && !loading && messages?.length! > 0 && (
+          <Box
+            backgroundColor="#313338"
+            height="calc(100% - 100px)"
+            overflowY="auto"
+            paddingRight={8}
+          >
+            {messages?.map((message) => (
               <Project
                 key={message.id}
                 guildID={guildID}
@@ -132,9 +146,9 @@ function ProjectsScreen() {
                 onReject={() => handleRejectProject(message)}
                 onVisitPage={() => handleVisitPage(message)}
               />
-            ))
-          )}
-        </Box>
+            ))}
+          </Box>
+        )}
       </Box>
     </Flex>
   );
