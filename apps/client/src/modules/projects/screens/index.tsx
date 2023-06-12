@@ -2,9 +2,8 @@
 
 import { Alert, AlertIcon, AlertTitle, Box, CircularProgress, Flex, Text } from "@chakra-ui/react";
 import { AxiosError } from "axios";
+import { type APIChannel, type APIMessage } from "discord-api-types/v10";
 import { useEffect, useState } from "react";
-
-import { Channel, Message } from "../../discord/interface";
 
 import Project from "./components/Project";
 import ServerInfo from "./components/ServerInfo";
@@ -13,12 +12,12 @@ import api from "@/discord/api";
 import { useSocket } from "@/socket/context";
 
 function ProjectsScreen() {
-  const [messages, setMessages] = useState<Message[] | null>(null);
+  const [messages, setMessages] = useState<APIMessage[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [status, setStatus] = useState("initial");
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
-  const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const [selectedMessage, setSelectedMessage] = useState<APIMessage | null>(null);
+  const [selectedChannel, setSelectedChannel] = useState<APIChannel | null>(null);
   const socket = useSocket();
   const guildID = "505180649787752450";
 
@@ -42,11 +41,11 @@ function ProjectsScreen() {
     }
   };
 
-  const handleVisitPage = (message: Message) => {
+  const handleVisitPage = (message: APIMessage) => {
     api.messages.addReaction(selectedChannel?.id!, message.id, "⌛");
   };
 
-  const handleInitVotation = (message: Message) => {
+  const handleInitVotation = (message: APIMessage) => {
     const options = "1,2,3,4,5";
 
     setSelectedMessage(message);
@@ -54,13 +53,13 @@ function ProjectsScreen() {
     socket.emit("votation:start", options);
   };
 
-  const handleCloseVotation = (message: Message) => {
+  const handleCloseVotation = (message: APIMessage) => {
     api.messages.deleteReaction(selectedChannel?.id!, message.id, "⌛");
     api.messages.addReaction(selectedChannel?.id!, message.id, "✅");
     socket.emit("votation:close");
   };
 
-  const handleEndVotation = (message: Message) => {
+  const handleEndVotation = (message: APIMessage) => {
     api.messages.deleteReaction(selectedChannel?.id!, message.id, "⌛");
     api.messages.addReaction(selectedChannel?.id!, message.id, "✅");
     setStatus("initial");
@@ -71,14 +70,14 @@ function ProjectsScreen() {
     socket.emit("votation:end");
   };
 
-  const omitMessage = (message: Message) => {
+  const omitMessage = (message: APIMessage) => {
     setMessages(
       (currentMessages) =>
         currentMessages?.filter((_message) => _message.id !== message.id) ?? null,
     );
   };
 
-  const handleRejectProject = (message: Message) => {
+  const handleRejectProject = (message: APIMessage) => {
     api.messages.deleteReaction(selectedChannel?.id!, message.id, "⌛");
     api.messages.addReaction(selectedChannel?.id!, message.id, "❌");
     setMessages(

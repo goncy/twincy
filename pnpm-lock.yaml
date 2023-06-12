@@ -81,6 +81,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^5.59.7
         version: 5.59.7(eslint@8.41.0)(typescript@5.0.4)
+      discord-api-types:
+        specifier: ^0.37.43
+        version: 0.37.43
       eslint:
         specifier: ^8.41.0
         version: 8.41.0
@@ -3119,7 +3122,6 @@ packages:
 
   /discord-api-types@0.37.43:
     resolution: {integrity: sha512-bBhDWU3TF9KADxR/mHp1K4Bvu/LRtFQdGyBjADu4e66F3ZnD4kp12W/SJCttIaCcMXzPV3sfty6eDGRNRph51Q==}
-    dev: false
 
   /doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}

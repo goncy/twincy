@@ -1,22 +1,22 @@
 "use-client";
 
 import { Avatar, Flex, Select, Text } from "@chakra-ui/react";
+import { type APIChannel, type APIGuild } from "discord-api-types/v10";
 import { useEffect, useState } from "react";
 
 import api from "@/discord/api";
-import { Channel, Guild } from "@/discord/interface";
 
 interface ServerInfoProps {
-  onChangeChannel: (channel: Channel) => Channel;
-  guildID: string;
+  onChangeChannel: (channel: APIChannel) => APIChannel;
+  guildID: APIGuild["id"];
 }
 
 export default function ServerInfo({onChangeChannel, guildID}: ServerInfoProps) {
-  const [guildsDetail, setGuildsDetail] = useState<Guild | null>(null);
-  const [channels, setChannels] = useState<Channel[] | null>(null);
-  const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const [guildsDetail, setGuildsDetail] = useState<APIGuild | null>(null);
+  const [channels, setChannels] = useState<APIChannel[] | null>(null);
+  const [selectedChannel, setSelectedChannel] = useState<APIChannel | null>(null);
 
-  const getGuildsInfo = async (guildID: Guild["id"]) => {
+  const getGuildsInfo = async (guildID: APIGuild["id"]) => {
     const guild = await api.guild.fetch(guildID);
     const channels = await api.guild.fetchChannels(guildID);
     const onlyTextChannels = channels.filter((channel) => channel.type === 0);

@@ -11,11 +11,10 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-
-import { Message } from "../../../discord/interface";
+import { type APIMessage } from "discord-api-types/v10";
 
 interface ProjectProps {
-  message: Message;
+  message: APIMessage;
   selected: boolean;
   guildID: string;
   onVisitPage: () => void;
