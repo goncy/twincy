@@ -15,7 +15,7 @@ function ProjectsScreen() {
   const [messages, setMessages] = useState<APIMessage[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [status, setStatus] = useState("initial");
+  const [status, setStatus] = useState<"inactive" | "active" | "closed">("inactive");
   const [selectedMessage, setSelectedMessage] = useState<APIMessage | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<APIChannel | null>(null);
   const socket = useSocket();
@@ -56,13 +56,14 @@ function ProjectsScreen() {
   const handleCloseVotation = (message: APIMessage) => {
     api.messages.deleteReaction(selectedChannel?.id!, message.id, "⌛");
     api.messages.addReaction(selectedChannel?.id!, message.id, "✅");
+    setStatus("closed");
     socket.emit("votation:close");
   };
 
   const handleEndVotation = (message: APIMessage) => {
     api.messages.deleteReaction(selectedChannel?.id!, message.id, "⌛");
     api.messages.addReaction(selectedChannel?.id!, message.id, "✅");
-    setStatus("initial");
+    setStatus("inactive");
     setMessages(
       (currentMessages) =>
         currentMessages?.filter((_message) => _message.id !== message.id) ?? null,
@@ -80,6 +81,7 @@ function ProjectsScreen() {
   const handleRejectProject = (message: APIMessage) => {
     api.messages.deleteReaction(selectedChannel?.id!, message.id, "⌛");
     api.messages.addReaction(selectedChannel?.id!, message.id, "❌");
+    setStatus("inactive");
     setMessages(
       (currentMessages) =>
         currentMessages?.filter((_message) => _message.id !== message.id) ?? null,
@@ -137,7 +139,7 @@ function ProjectsScreen() {
                 guildID={guildID}
                 message={message}
                 selected={selectedMessage?.id === message.id}
-                status={status}
+                votingClosed={status === "closed"}
                 onCloseVotation={() => handleCloseVotation(message)}
                 onEndVotation={() => handleEndVotation(message)}
                 onInitVotation={() => handleInitVotation(message)}

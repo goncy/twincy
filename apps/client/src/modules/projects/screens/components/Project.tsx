@@ -23,7 +23,7 @@ interface ProjectProps {
   onEndVotation: () => void;
   onReject: () => void;
   onOmit: () => void;
-  status: string;
+  votingClosed: boolean;
 }
 
 export default function Project({
@@ -36,7 +36,7 @@ export default function Project({
   onOmit,
   selected,
   guildID,
-  status,
+  votingClosed,
 }: ProjectProps) {
   const regex = /(https?:\/\/[^\s]+)/g;
   const links = message.content.match(regex);
@@ -118,11 +118,14 @@ export default function Project({
               Iniciar votación
             </Button>
           )}
-          {status === "active" && selected && (
+          {selected && (
             <>
-              <Button fontSize="sm" onClick={onCloseVotation}>
-                Pausar votación
-              </Button>
+              {!votingClosed && (
+                <Button fontSize="sm" onClick={onCloseVotation}>
+                  Pausar votación
+                </Button>
+              )}
+
               <Button fontSize="sm" onClick={onEndVotation}>
                 Terminar votación
               </Button>
