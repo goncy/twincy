@@ -22,11 +22,11 @@
     "incremental": true,
     "baseUrl": "./src",
     "paths": {
-      "~/*": [
-        "./*"
-      ],
       "@/*": [
         "./modules/*"
+      ],
+      "~/*": [
+        "./*"
       ]
     },
     "plugins": [

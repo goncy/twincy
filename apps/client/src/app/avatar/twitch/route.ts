@@ -3,9 +3,7 @@ import {NextRequest} from "next/server";
 import api from "@/twitch/api";
 
 // Use edge
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
 interface Cookie {
   token: string | undefined;
