@@ -1,40 +1,21 @@
 "use client";
 
-import {SimpleGrid, Stack, StackProps, Text} from "@chakra-ui/react";
-import Image from "next/image";
-import {useEffect, useState} from "react";
+import {Box} from "@chakra-ui/react";
+import {useEffect, useRef, useState} from "react";
 
-import leniolabs from "../logos/leniolabs.png";
-
-type Props = {duration: number; loop: number};
-
-const Banner: React.FC<StackProps> = ({opacity}) => {
-  return (
-    <Stack
-      backgroundColor="gray.700"
-      color="white"
-      fontFamily="inter"
-      fontSize="xl"
-      height={290}
-      lineHeight="1.1"
-      opacity={opacity}
-      padding={4}
-      spacing={4}
-      textAlign="center"
-      transition="opacity 2s"
-    >
-      <Text fontWeight="bold" textTransform="uppercase">
-        Este stream es auspiciado por
-      </Text>
-      <SimpleGrid columns={1} justifyItems="center" spacing={4}>
-        <Image alt="Leniolabs" src={leniolabs} />
-      </SimpleGrid>
-    </Stack>
-  );
-};
-
-const SponsorsBannerScreen: React.FC<Props> = ({duration, loop}) => {
-  const [isShown, toggleShown] = useState<boolean>(true);
+const SponsorsBannerScreen = ({
+  duration,
+  loop,
+  delay,
+  children,
+}: {
+  duration: number;
+  loop: number;
+  delay: number;
+  children: React.ReactNode;
+}) => {
+  const hasStarted = useRef(false);
+  const [isShown, toggleShown] = useState<boolean>(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -45,15 +26,29 @@ const SponsorsBannerScreen: React.FC<Props> = ({duration, loop}) => {
           toggleShown((isShown) => !isShown);
         });
       },
-      isShown ? duration : loop,
+      isShown ? duration : hasStarted.current ? loop : delay,
     );
+
+    hasStarted.current = true;
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [duration, isShown, loop]);
+  }, [duration, isShown, loop, delay]);
 
-  return <Banner opacity={isShown ? 1 : 0} transition="opacity 2s" />;
+  return (
+    <Box
+      height="100%"
+      left={0}
+      opacity={isShown ? 1 : 0}
+      position="absolute"
+      top={0}
+      transition="opacity 2s"
+      width="100%"
+    >
+      {children}
+    </Box>
+  );
 };
 
 export default SponsorsBannerScreen;
