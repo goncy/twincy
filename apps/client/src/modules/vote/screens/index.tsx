@@ -101,7 +101,7 @@ export default function VoteScreen() {
           borderRadius={4}
           borderWidth={1}
           color="white"
-          fontSize="3xl"
+          fontSize="2xl"
           padding={3}
           rounded="sm"
           shadow="2xl"

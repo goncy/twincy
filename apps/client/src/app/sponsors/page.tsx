@@ -4,6 +4,7 @@ import {SimpleGrid, Stack, Text} from "@chakra-ui/react";
 import Image from "next/image";
 
 import leniolabs from "@/sponsor/logos/leniolabs.png";
+import platzi from "@/sponsor/logos/platzi.png";
 import SponsorsScreen from "@/sponsor/screens";
 
 const SponsorsPage = ({
@@ -32,7 +33,8 @@ const SponsorsPage = ({
             Este stream es auspiciado por
           </Text>
           <SimpleGrid columns={1} justifyItems="center" spacing={4}>
-            <Image alt="Leniolabs" height={300} src={leniolabs} />
+            <Image alt="Leniolabs" height={128} src={leniolabs} />
+            <Image alt="Platzi" height={128} src={platzi} />
           </SimpleGrid>
         </Stack>
       </SponsorsScreen>
