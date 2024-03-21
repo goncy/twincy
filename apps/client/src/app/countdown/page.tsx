@@ -1,6 +1,8 @@
 import CountdownScreen from "@/countdown/screens/index";
 
-const CountdownPage = ({searchParams: {text, timer}}: {
+const CountdownPage = ({
+  searchParams: {text, timer},
+}: {
   searchParams: {
     text: string;
     timer: string;
